@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Xunyao-Web",
+    "section": "",
+    "text": "Xunyao Xu\nUniversity of Pennsylvania\nI am a student at the University of Pennsylvania with interests in data science, machine learning, and software engineering. I enjoy using data and technology to solve real-world problems and build practical solutions.\n\nQuick Links"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "blog/posts/post2/index.html",
+    "href": "blog/posts/post2/index.html",
+    "title": "Xunyao-Web",
+    "section": "",
+    "text": "title: “My Second Blog Post”\n\n\ndate: 2026-06-16\n\n\ncategories:\n\n\n-opinion\n\n\n-labor market\n\n\n\nThis is my second blog post."
+  },
+  {
+    "objectID": "bio.html",
+    "href": "bio.html",
+    "title": "About Me",
+    "section": "",
+    "text": "I am a graduate student at the University of Pennsylvania pursuing a Master of Applied Economics and Data Science (AEDS). My academic interests lie at the intersection of economics, finance, and data science, with a focus on applying quantitative and computational methods to real-world problems."
+  },
+  {
+    "objectID": "bio.html#education",
+    "href": "bio.html#education",
+    "title": "About Me",
+    "section": "Education",
+    "text": "Education\nUniversity of Pennsylvania\nMaster of Applied Economics and Data Science (AEDS)\nExpected 2027\nUniversity of Illinois Urbana-Champaign (UIUC)\nBachelor of Science in Finance + Data Science\n2022–2026"
+  },
+  {
+    "objectID": "bio.html#professional-interests",
+    "href": "bio.html#professional-interests",
+    "title": "About Me",
+    "section": "Professional Interests",
+    "text": "Professional Interests\n\nQuantitative Research\nQuantitative Finance\nFinancial Economics\nMachine Learning\nEconometrics\nData Science"
+  },
+  {
+    "objectID": "bio.html#technical-skills",
+    "href": "bio.html#technical-skills",
+    "title": "About Me",
+    "section": "Technical Skills",
+    "text": "Technical Skills\n\nProgramming: Python, R\nQuantitative Methods: Statistical Modeling, Econometrics, Time Series Analysis\nData Science: Data Analysis, Data Visualization, Machine Learning\nQuantitative Research: Financial Data Analysis, Backtesting, Research Design\nDevelopment Tools: Git, GitHub"
+  },
+  {
+    "objectID": "bio.html#career-goals",
+    "href": "bio.html#career-goals",
+    "title": "About Me",
+    "section": "Career Goals",
+    "text": "Career Goals\nI am interested in pursuing a career in quantitative research and data-driven finance. My goal is to combine my background in finance, economics, and data science to analyze financial data, develop quantitative models, and apply statistical and computational methods to complex financial problems."
+  },
+  {
+    "objectID": "bio.html#contact",
+    "href": "bio.html#contact",
+    "title": "About Me",
+    "section": "Contact",
+    "text": "Contact\nxunyaox2@sas.upenn.edu"
+  },
+  {
+    "objectID": "blog/posts/post1/index.html#this-is-my-first-blog-post.-example-latex-equation-frac12sum_i1n-x_i",
+    "href": "blog/posts/post1/index.html#this-is-my-first-blog-post.-example-latex-equation-frac12sum_i1n-x_i",
+    "title": "My First Blog Post",
+    "section": "This is my first blog post. Example \\(\\LaTeX\\) equation: \\(\\frac{1}{2}\\sum_{i=1}^n x_i\\)",
+    "text": "This is my first blog post. Example \\(\\LaTeX\\) equation: \\(\\frac{1}{2}\\sum_{i=1}^n x_i\\)"
+  },
+  {
+    "objectID": "Resume.html",
+    "href": "Resume.html",
+    "title": "Resume",
+    "section": "",
+    "text": "Download my resume here: ## Resume PDF"
+  },
+  {
+    "objectID": "Resume.html#title-resume",
+    "href": "Resume.html#title-resume",
+    "title": "Resume",
+    "section": "",
+    "text": "Download my resume here: ## Resume PDF"
+  },
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "-labor market\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMy First Blog Post\n\n\n\n\n\n\n\n\nJun 16, 2026\n\n\n\n\n\nNo matching items"
+  }
+]

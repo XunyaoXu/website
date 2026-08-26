@@ -1,0 +1,41 @@
+---
+title: "About Me"
+---
+
+I am a graduate student at the University of Pennsylvania pursuing a Master of Applied Economics and Data Science (AEDS). My academic interests lie at the intersection of economics, finance, and data science, with a focus on applying quantitative and computational methods to real-world problems.
+
+## Education
+
+**University of Pennsylvania**  
+Master of Applied Economics and Data Science (AEDS)  
+Expected 2027
+
+**University of Illinois Urbana-Champaign (UIUC)**  
+Bachelor of Science in Finance + Data Science  
+2022–2026
+
+## Professional Interests
+
+- Quantitative Research
+- Quantitative Finance
+- Financial Economics
+- Machine Learning
+- Econometrics
+- Data Science
+
+## Technical Skills
+
+- **Programming:** Python, R
+- **Quantitative Methods:** Statistical Modeling, Econometrics, Time Series Analysis
+- **Data Science:** Data Analysis, Data Visualization, Machine Learning
+- **Quantitative Research:** Financial Data Analysis, Backtesting, Research Design
+- **Development Tools:** Git, GitHub
+
+## Career Goals
+
+I am interested in pursuing a career in quantitative research and data-driven finance. My goal is to combine my background in finance, economics, and data science to analyze financial data, develop quantitative models, and apply statistical and computational methods to complex financial problems.
+
+
+## Contact
+
+[xunyaox2@sas.upenn.edu](mailto:xunyaox2@sas.upenn.edu)
