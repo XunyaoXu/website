@@ -6,13 +6,17 @@ I am a graduate student at the University of Pennsylvania pursuing a Master of A
 
 ## Education
 
-**University of Pennsylvania**  
+**University of Pennsylvania** ![](images/UniversityofPennsylvania_FullLogo_RGB.png){width="10%" style="margin-left: 20px; vertical-align: middle;"}
+
 Master of Applied Economics and Data Science (AEDS)  
 Expected 2027
 
-**University of Illinois Urbana-Champaign (UIUC)**  
+
+
+**University of Illinois Urbana-Champaign (UIUC)**  ![](images/Illinois_logo_fullcolor_®_rgb.png){width="5%" style="margin-left: 20px; vertical-align: middle;"}
+
 Bachelor of Science in Finance + Data Science
-2022–2026
+2022–2026 
 
 ## Professional Interests
 
