@@ -3,4 +3,4 @@
 title: "Resume"
 ---
 Download my resume here:
-## [Resume PDF](files/Xunyao_Xu.pdf)
+[Resume PDF](files/Xunyao_Xu.pdf)
