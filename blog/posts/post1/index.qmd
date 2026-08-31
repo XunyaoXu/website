@@ -6,7 +6,7 @@ categories:
   - data-science
 ---
 
-![](figure1.png){width="500px"}
+![](blog_images/images.jpeg){width="500px"}
 
 This is my first blog post. Example $\LaTeX$ equation: $\frac{1}{2}\sum_{i=1}^n x_i$
 ---
