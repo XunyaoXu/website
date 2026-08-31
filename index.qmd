@@ -24,7 +24,6 @@ I am a student at the University of Pennsylvania with interests in data science,
 <a href="https://linkedin.com/in/xunyao"><i class="bi bi-linkedin fs-3"></i></a>
 <a href="files/Xunyao_Xu.pdf"><i class="bi bi-file-earmark-person-fill fs-3"></i></a>
 <a href="mailto:xunyaox2@sas.upenn.edu"><i class="bi bi-envelope-fill fs-3"></i></a>
-<a href="+1 (447)-902-2673"><i class="bi bi-envelope-fill fs-3"></i></a>
 </div>
 :::
 ::::
