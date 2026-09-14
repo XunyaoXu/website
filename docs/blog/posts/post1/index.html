@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-06-16">
+<meta name="dcterms.date" content="2026-09-14">
 
-<title>My First Blog Post – Xunyao-Web</title>
+<title>What Is a P-Value, Really? – Xunyao-Web</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -152,10 +152,10 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">My First Blog Post</h1>
+<h1 class="title">What Is a P-Value, Really?</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">personal</div>
-    <div class="quarto-category">data-science</div>
+    <div class="quarto-category">statistics</div>
+    <div class="quarto-category">economics</div>
   </div>
   </div>
 
@@ -167,7 +167,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 16, 2026</p>
+      <p class="date">September 14, 2026</p>
     </div>
   </div>
   
@@ -179,9 +179,83 @@ window.Quarto = {
 </header>
 
 
-<p><img src="blog_images/images.jpeg" class="img-fluid" width="500"></p>
-<section id="this-is-my-first-blog-post.-example-latex-equation-frac12sum_i1n-x_i" class="level2">
-<h2 class="anchored" data-anchor-id="this-is-my-first-blog-post.-example-latex-equation-frac12sum_i1n-x_i">This is my first blog post. Example <span class="math inline">\(\LaTeX\)</span> equation: <span class="math inline">\(\frac{1}{2}\sum_{i=1}^n x_i\)</span></h2>
+<section id="why-is-a-p-value-so-confusing" class="level2">
+<h2 class="anchored" data-anchor-id="why-is-a-p-value-so-confusing">Why Is a P-Value So Confusing?</h2>
+<p>Suppose a researcher runs an experiment and reports a p-value of 0.03. What does that number actually mean?</p>
+<p>A common interpretation is that there is only a 3% chance that the null hypothesis is true. This sounds reasonable, but it is incorrect.</p>
+<p>The p-value is one of the most widely used ideas in statistics, but also one of the most frequently misunderstood. The main reason is that it answers a slightly different question from the one people naturally want to ask.</p>
+</section>
+<section id="a-simple-coin-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-simple-coin-example">A Simple Coin Example</h2>
+<p>Imagine that someone claims a coin is fair. If the coin is truly fair, the probability of getting heads is</p>
+<p><span class="math display">\[
+H_0: p = 0.5
+\]</span> Now suppose we flip the coin 20 times and observe 16 heads.</p>
+<p>Getting 16 heads out of 20 seems unusual for a fair coin. The p-value gives us a way to measure exactly how unusual this result is.</p>
+<p>In this case, the p-value asks:</p>
+<blockquote class="blockquote">
+<p>If the coin really were fair, what is the probability of observing a result at least as extreme as 16 heads out of 20?</p>
+</blockquote>
+<p>For a two-sided test, this probability is about 0.012, or 1.2%.</p>
+<p>So the data would be fairly unusual if the coin were actually fair.</p>
+<p><img src="blog_images/pvalue_coin_flip.png" class="img-fluid" width="700"></p>
+</section>
+<section id="what-the-p-value-does-and-does-not-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-p-value-does-and-does-not-mean">What the P-Value Does — and Does Not — Mean</h2>
+<p>The easiest way to understand a p-value is to pay attention to the direction of the probability.</p>
+<p>A p-value measures</p>
+<p><span class="math display">\[
+P(\text{data at least as extreme as observed} \mid H_0).
+\]</span></p>
+<p>In words, we assume the null hypothesis is true and then ask how surprising the observed data would be.</p>
+<p>But this is not the same as</p>
+<p><span class="math display">\[
+P(H_0 \mid \text{data}),
+\]</span></p>
+<p>which would mean the probability that the null hypothesis is true given the data.</p>
+<p>This difference is subtle but important. A p-value of 0.03 does <strong>not</strong> mean that there is a 3% chance that the null hypothesis is true. It means that, if the null hypothesis were true, results at least as extreme as the one we observed would occur about 3% of the time.</p>
+</section>
+<section id="a-useful-analogy-medical-testing" class="level2">
+<h2 class="anchored" data-anchor-id="a-useful-analogy-medical-testing">A Useful Analogy: Medical Testing</h2>
+<p>Consider a medical test for a rare disease.</p>
+<p>Suppose the test is very accurate, and only 1% of healthy people receive a positive result. In probability notation, this is</p>
+<p><span class="math display">\[
+P(\text{positive} \mid \text{healthy}) = 0.01.
+\]</span></p>
+<p>Now imagine that your test comes back positive.</p>
+<p>Can we conclude that there is only a 1% chance that you are healthy?</p>
+<p>No.</p>
+<p>What we actually want to know is</p>
+<p><span class="math display">\[
+P(\text{healthy} \mid \text{positive}),
+\]</span></p>
+<p>which is a different probability.</p>
+<p>To calculate that probability, we would also need other information, such as how common the disease is in the population.</p>
+<p>The same logic applies to p-values. A small probability of observing the data under the null hypothesis does not automatically tell us the probability that the null hypothesis itself is true.</p>
+</section>
+<section id="what-does-a-small-p-value-tell-us" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-a-small-p-value-tell-us">What Does a Small P-Value Tell Us?</h2>
+<p>Suppose a statistical test gives us</p>
+<p><span class="math display">\[
+p = 0.03.
+\]</span></p>
+<p>This means that, if the null hypothesis were true, results at least as extreme as the one we observed would occur about 3% of the time.</p>
+<p>Because such a result would be relatively unusual under the null hypothesis, the data provide evidence against (H_0).</p>
+<p>Researchers often compare the p-value with a significance level such as</p>
+<p><span class="math display">\[
+\alpha = 0.05.
+\]</span></p>
+<p>If the p-value is smaller than 0.05, the result is often called statistically significant, and researchers may reject the null hypothesis.</p>
+<p>Importantly, statistical significance is evidence against the null hypothesis, not a statement about the probability that either hypothesis is true.</p>
+</section>
+<section id="takeaway" class="level2">
+<h2 class="anchored" data-anchor-id="takeaway">Takeaway</h2>
+<p>A p-value does not tell us the probability that a hypothesis is true. Instead, it tells us how unusual our data would be if the null hypothesis were true.</p>
+<p>The easiest way to remember it is:</p>
+<blockquote class="blockquote">
+<p>Assume the null hypothesis is true. How surprising is the data?</p>
+</blockquote>
+<p>Once this direction of probability is clear, p-values become much less mysterious.</p>
 
 
 </section>

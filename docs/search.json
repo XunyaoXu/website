@@ -65,7 +65,7 @@
   {
     "objectID": "blog/posts/post1/index.html#this-is-my-first-blog-post.-example-latex-equation-frac12sum_i1n-x_i",
     "href": "blog/posts/post1/index.html#this-is-my-first-blog-post.-example-latex-equation-frac12sum_i1n-x_i",
-    "title": "My First Blog Post",
+    "title": "What Is a P-Value, Really?",
     "section": "This is my first blog post. Example \\(\\LaTeX\\) equation: \\(\\frac{1}{2}\\sum_{i=1}^n x_i\\)",
     "text": "This is my first blog post. Example \\(\\LaTeX\\) equation: \\(\\frac{1}{2}\\sum_{i=1}^n x_i\\)"
   },
@@ -88,7 +88,7 @@
     "href": "blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "-labor market\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMy First Blog Post\n\n\n\n\n\n\n\n\nJun 16, 2026\n\n\n\n\n\nNo matching items"
+    "text": "-labor market\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Is a P-Value, Really?\n\n\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "resume.html",
@@ -103,5 +103,54 @@
     "title": "Resume",
     "section": "",
     "text": "Download my resume here: Resume PDF"
+  },
+  {
+    "objectID": "blog/posts/post1/index.html",
+    "href": "blog/posts/post1/index.html",
+    "title": "What Is a P-Value, Really?",
+    "section": "",
+    "text": "Suppose a researcher runs an experiment and reports a p-value of 0.03. What does that number actually mean?\nA common interpretation is that there is only a 3% chance that the null hypothesis is true. This sounds reasonable, but it is incorrect.\nThe p-value is one of the most widely used ideas in statistics, but also one of the most frequently misunderstood. The main reason is that it answers a slightly different question from the one people naturally want to ask."
+  },
+  {
+    "objectID": "blog/posts/post1/index.html#why-is-a-p-value-so-confusing",
+    "href": "blog/posts/post1/index.html#why-is-a-p-value-so-confusing",
+    "title": "What Is a P-Value, Really?",
+    "section": "",
+    "text": "Suppose a researcher runs an experiment and reports a p-value of 0.03. What does that number actually mean?\nA common interpretation is that there is only a 3% chance that the null hypothesis is true. This sounds reasonable, but it is incorrect.\nThe p-value is one of the most widely used ideas in statistics, but also one of the most frequently misunderstood. The main reason is that it answers a slightly different question from the one people naturally want to ask."
+  },
+  {
+    "objectID": "blog/posts/post1/index.html#a-simple-coin-example",
+    "href": "blog/posts/post1/index.html#a-simple-coin-example",
+    "title": "What Is a P-Value, Really?",
+    "section": "A Simple Coin Example",
+    "text": "A Simple Coin Example\nImagine that someone claims a coin is fair. If the coin is truly fair, the probability of getting heads is\n\\[\nH_0: p = 0.5\n\\] Now suppose we flip the coin 20 times and observe 16 heads.\nGetting 16 heads out of 20 seems unusual for a fair coin. The p-value gives us a way to measure exactly how unusual this result is.\nIn this case, the p-value asks:\n\nIf the coin really were fair, what is the probability of observing a result at least as extreme as 16 heads out of 20?\n\nFor a two-sided test, this probability is about 0.012, or 1.2%.\nSo the data would be fairly unusual if the coin were actually fair."
+  },
+  {
+    "objectID": "blog/posts/post1/index.html#what-the-p-value-does-and-does-not-mean",
+    "href": "blog/posts/post1/index.html#what-the-p-value-does-and-does-not-mean",
+    "title": "What Is a P-Value, Really?",
+    "section": "What the P-Value Does — and Does Not — Mean",
+    "text": "What the P-Value Does — and Does Not — Mean\nThe easiest way to understand a p-value is to pay attention to the direction of the probability.\nA p-value measures\n\\[\nP(\\text{data at least as extreme as observed} \\mid H_0).\n\\]\nIn words, we assume the null hypothesis is true and then ask how surprising the observed data would be.\nBut this is not the same as\n\\[\nP(H_0 \\mid \\text{data}),\n\\]\nwhich would mean the probability that the null hypothesis is true given the data.\nThis difference is subtle but important. A p-value of 0.03 does not mean that there is a 3% chance that the null hypothesis is true. It means that, if the null hypothesis were true, results at least as extreme as the one we observed would occur about 3% of the time."
+  },
+  {
+    "objectID": "blog/posts/post1/index.html#a-useful-analogy-medical-testing",
+    "href": "blog/posts/post1/index.html#a-useful-analogy-medical-testing",
+    "title": "What Is a P-Value, Really?",
+    "section": "A Useful Analogy: Medical Testing",
+    "text": "A Useful Analogy: Medical Testing\nConsider a medical test for a rare disease.\nSuppose the test is very accurate, and only 1% of healthy people receive a positive result. In probability notation, this is\n\\[\nP(\\text{positive} \\mid \\text{healthy}) = 0.01.\n\\]\nNow imagine that your test comes back positive.\nCan we conclude that there is only a 1% chance that you are healthy?\nNo.\nWhat we actually want to know is\n\\[\nP(\\text{healthy} \\mid \\text{positive}),\n\\]\nwhich is a different probability.\nTo calculate that probability, we would also need other information, such as how common the disease is in the population.\nThe same logic applies to p-values. A small probability of observing the data under the null hypothesis does not automatically tell us the probability that the null hypothesis itself is true."
+  },
+  {
+    "objectID": "blog/posts/post1/index.html#what-does-a-small-p-value-tell-us",
+    "href": "blog/posts/post1/index.html#what-does-a-small-p-value-tell-us",
+    "title": "What Is a P-Value, Really?",
+    "section": "What Does a Small P-Value Tell Us?",
+    "text": "What Does a Small P-Value Tell Us?\nSuppose a statistical test gives us\n\\[\np = 0.03.\n\\]\nThis means that, if the null hypothesis were true, results at least as extreme as the one we observed would occur about 3% of the time.\nBecause such a result would be relatively unusual under the null hypothesis, the data provide evidence against (H_0).\nResearchers often compare the p-value with a significance level such as\n\\[\n\\alpha = 0.05.\n\\]\nIf the p-value is smaller than 0.05, the result is often called statistically significant, and researchers may reject the null hypothesis.\nImportantly, statistical significance is evidence against the null hypothesis, not a statement about the probability that either hypothesis is true."
+  },
+  {
+    "objectID": "blog/posts/post1/index.html#takeaway",
+    "href": "blog/posts/post1/index.html#takeaway",
+    "title": "What Is a P-Value, Really?",
+    "section": "Takeaway",
+    "text": "Takeaway\nA p-value does not tell us the probability that a hypothesis is true. Instead, it tells us how unusual our data would be if the null hypothesis were true.\nThe easiest way to remember it is:\n\nAssume the null hypothesis is true. How surprising is the data?\n\nOnce this direction of probability is clear, p-values become much less mysterious."
   }
 ]
