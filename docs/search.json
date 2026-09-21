@@ -16,9 +16,9 @@
   {
     "objectID": "blog/posts/post2/index.html",
     "href": "blog/posts/post2/index.html",
-    "title": "Xunyao-Web",
+    "title": "What Technical Skills Do Economic Consulting Firms Actually Want?",
     "section": "",
-    "text": "title: “My Second Blog Post”\n\n\ndate: 2026-06-16\n\n\ncategories:\n\n\n-opinion\n\n\n-labor market\n\n\n\nThis is my second blog post."
+    "text": "Students interested in economic consulting are often told to learn a wide range of technical tools: Excel, R, Python, Stata, SQL, SAS, and sometimes more specialized software. But if recruiting season is approaching and time is limited, which skills should a student actually prioritize?\nTo investigate this question, I scraped current entry-level job postings from two economic consulting firms, The Brattle Group and Charles River Associates (CRA). My goal was not simply to collect job listings, but to use the postings to identify which technical skills appear consistently across firms and which seem more firm-specific."
   },
   {
     "objectID": "bio.html",
@@ -88,7 +88,7 @@
     "href": "blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "-labor market\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Is a P-Value, Really?\n\n\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\nNo matching items"
+    "text": "What Technical Skills Do Economic Consulting Firms Actually Want?\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Is a P-Value, Really?\n\n\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "resume.html",
@@ -152,5 +152,47 @@
     "title": "What Is a P-Value, Really?",
     "section": "Takeaway",
     "text": "Takeaway\nA p-value does not tell us the probability that a hypothesis is true. Instead, it tells us how unusual our data would be if the null hypothesis were true.\nThe easiest way to remember it is:\n\nAssume the null hypothesis is true. How surprising is the data?\n\nOnce this direction of probability is clear, p-values become much less mysterious."
+  },
+  {
+    "objectID": "blog/posts/post2/index.html#introduction",
+    "href": "blog/posts/post2/index.html#introduction",
+    "title": "What Technical Skills Do Economic Consulting Firms Actually Want?",
+    "section": "",
+    "text": "Students interested in economic consulting are often told to learn a wide range of technical tools: Excel, R, Python, Stata, SQL, SAS, and sometimes more specialized software. But if recruiting season is approaching and time is limited, which skills should a student actually prioritize?\nTo investigate this question, I scraped current entry-level job postings from two economic consulting firms, The Brattle Group and Charles River Associates (CRA). My goal was not simply to collect job listings, but to use the postings to identify which technical skills appear consistently across firms and which seem more firm-specific."
+  },
+  {
+    "objectID": "blog/posts/post2/index.html#collecting-the-data",
+    "href": "blog/posts/post2/index.html#collecting-the-data",
+    "title": "What Technical Skills Do Economic Consulting Firms Actually Want?",
+    "section": "Collecting the Data",
+    "text": "Collecting the Data\nI used the rvest package in R to collect publicly available job postings from The Brattle Group’s Greenhouse job board and Charles River Associates’ Greenhouse job board.\nI used the rvest package in R to collect publicly available job postings from the firms’ Greenhouse job boards. I only accessed pages that were publicly visible and did not attempt to bypass logins, CAPTCHAs, or other access restrictions.\nFor Brattle, I scraped the firm’s Greenhouse job-board page to collect individual job URLs and then visited each posting. For CRA, I used two publicly available U.S. entry-level economics consulting postings hosted on its Greenhouse site.\n\n\nCode\nlibrary(rvest)\nlibrary(dplyr)\nlibrary(purrr)\n\nscrape_brattle_job &lt;- function(url) {\n\n  Sys.sleep(1)\n\n  page &lt;- read_html(url)\n\n  tibble(\n    job_title = page |&gt; html_element(\"h1\") |&gt; html_text2(),\n    job_url = url,\n    job_description = page |&gt; html_element(\"body\") |&gt; html_text2()\n  )\n}\n\n\nI then restricted the sample to U.S. entry-level analyst and internship positions. Because the same Brattle position was sometimes posted separately for multiple cities, I removed duplicate job titles so that one job description would not receive more weight simply because it was offered in several locations.\nThe final sample contained eight unique U.S. entry-level job types: six from Brattle and two from CRA."
+  },
+  {
+    "objectID": "blog/posts/post2/index.html#which-skills-appear-most-often",
+    "href": "blog/posts/post2/index.html#which-skills-appear-most-often",
+    "title": "What Technical Skills Do Economic Consulting Firms Actually Want?",
+    "section": "Which Skills Appear Most Often?",
+    "text": "Which Skills Appear Most Often?\nI searched each job description for eight technical skills: Excel, R, Python, Stata, SQL, SAS, VBA, and GAMS. Each skill was coded as either present or absent in a posting.\n\nThe first result is striking. Excel, R, Python, and Stata appeared in all eight job types in the sample. SAS and VBA appeared in six of the eight, while SQL and GAMS appeared in only two.\nThis suggests that the most useful preparation is not choosing between R and Python. At least in these postings, employers frequently mention both, alongside Stata and Excel. A student preparing for entry-level economic consulting would therefore benefit from being comfortable moving between spreadsheet analysis, statistical software, and general-purpose programming."
+  },
+  {
+    "objectID": "blog/posts/post2/index.html#do-firms-ask-for-the-same-skills",
+    "href": "blog/posts/post2/index.html#do-firms-ask-for-the-same-skills",
+    "title": "What Technical Skills Do Economic Consulting Firms Actually Want?",
+    "section": "Do Firms Ask for the Same Skills?",
+    "text": "Do Firms Ask for the Same Skills?\nThe overall percentages hide an important difference between firms.\n\nBoth Brattle and CRA consistently mentioned Excel, R, Python, and Stata, suggesting that these four tools form a common technical core in this sample.\nThe more specialized skills differed substantially. All six Brattle job types mentioned VBA, while neither CRA posting did. GAMS appeared in some Brattle roles but neither CRA role. In contrast, both CRA job types mentioned SQL, while none of the six Brattle job types did. SAS appeared in both firms, although more consistently at CRA.\nThis distinction matters because a simple industry-wide ranking can hide differences in how individual firms work."
+  },
+  {
+    "objectID": "blog/posts/post2/index.html#what-should-a-student-learn-first",
+    "href": "blog/posts/post2/index.html#what-should-a-student-learn-first",
+    "title": "What Technical Skills Do Economic Consulting Firms Actually Want?",
+    "section": "What Should a Student Learn First?",
+    "text": "What Should a Student Learn First?\nBased on these postings, I would divide preparation into two stages.\nFirst, prioritize Excel, R, Python, and Stata. They were the only four skills mentioned across every job type in the sample, making them the strongest candidates for broadly transferable preparation.\nSecond, tailor additional skills to the firms being targeted. For example, VBA and GAMS may be especially useful for some Brattle roles, while SQL appears more relevant in the CRA postings examined here.\nThere are important limitations. This is a small sample of eight unique job types from only two firms, and job postings change over time. The results therefore describe these postings rather than the entire economic consulting industry."
+  },
+  {
+    "objectID": "blog/posts/post2/index.html#takeaway",
+    "href": "blog/posts/post2/index.html#takeaway",
+    "title": "What Technical Skills Do Economic Consulting Firms Actually Want?",
+    "section": "Takeaway",
+    "text": "Takeaway\nWeb scraping turns scattered job descriptions into structured information that can support a practical decision. In this sample, the clearest pattern is a shared core of Excel, R, Python, and Stata, followed by more firm-specific tools such as SAS, VBA, SQL, and GAMS.\nFor a student with limited preparation time, the evidence from these postings suggests building the common core first and then using current postings from target firms to decide which specialized tools to learn next."
   }
 ]
