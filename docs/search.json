@@ -88,7 +88,7 @@
     "href": "blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "What Technical Skills Do Economic Consulting Firms Actually Want?\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Is a P-Value, Really?\n\n\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\nNo matching items"
+    "text": "Education and Labor Market Outcomes in the U.S.\n\n\n\n\n\n\n\n\nSep 29, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Technical Skills Do Economic Consulting Firms Actually Want?\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Is a P-Value, Really?\n\n\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "resume.html",
@@ -194,5 +194,54 @@
     "title": "What Technical Skills Do Economic Consulting Firms Actually Want?",
     "section": "Takeaway",
     "text": "Takeaway\nWeb scraping turns scattered job descriptions into structured information that can support a practical decision. In this sample, the clearest pattern is a shared core of Excel, R, Python, and Stata, followed by more firm-specific tools such as SAS, VBA, SQL, and GAMS.\nFor a student with limited preparation time, the evidence from these postings suggests building the common core first and then using current postings from target firms to decide which specialized tools to learn next."
+  },
+  {
+    "objectID": "blog/posts/post3/index.html",
+    "href": "blog/posts/post3/index.html",
+    "title": "Education and Labor Market Outcomes in the U.S.",
+    "section": "",
+    "text": "How do labor market outcomes differ across education groups in the United States? Education is closely connected to workers’ opportunities in the labor market, so differences in unemployment and labor force participation can help show which groups are more exposed to weak labor market conditions.\nThis post uses IPUMS CPS Basic Monthly Survey microdata to compare adults ages 25–64 across four education groups. I use July samples from 2015 to 2026 and calculate population statistics using the CPS final person weight, WTFINL.\nI restrict the sample to ages 25–64 to focus on working-age adults who have largely completed their education. I group educational attainment into four categories: high school or less, some college or an associate degree, a bachelor’s degree, and a graduate degree. The unemployment rate is calculated among people in the labor force, while the labor force participation rate measures the share of the working-age population that is either employed or actively looking for work."
+  },
+  {
+    "objectID": "blog/posts/post3/index.html#introduction",
+    "href": "blog/posts/post3/index.html#introduction",
+    "title": "Education and Labor Market Outcomes in the U.S.",
+    "section": "",
+    "text": "How do labor market outcomes differ across education groups in the United States? Education is closely connected to workers’ opportunities in the labor market, so differences in unemployment and labor force participation can help show which groups are more exposed to weak labor market conditions.\nThis post uses IPUMS CPS Basic Monthly Survey microdata to compare adults ages 25–64 across four education groups. I use July samples from 2015 to 2026 and calculate population statistics using the CPS final person weight, WTFINL.\nI restrict the sample to ages 25–64 to focus on working-age adults who have largely completed their education. I group educational attainment into four categories: high school or less, some college or an associate degree, a bachelor’s degree, and a graduate degree. The unemployment rate is calculated among people in the labor force, while the labor force participation rate measures the share of the working-age population that is either employed or actively looking for work."
+  },
+  {
+    "objectID": "blog/posts/post3/index.html#data",
+    "href": "blog/posts/post3/index.html#data",
+    "title": "Education and Unemployment in the U.S.",
+    "section": "Data",
+    "text": "Data\n\nlibrary(tidyverse)\n\nWarning: package 'ggplot2' was built under R version 4.3.3\n\n\nWarning: package 'tibble' was built under R version 4.3.3\n\n\nWarning: package 'purrr' was built under R version 4.3.3\n\n\nWarning: package 'lubridate' was built under R version 4.3.3\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.3.0\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(ipumsr)\n\nWarning: package 'ipumsr' was built under R version 4.3.3\n\nlibrary(scales)\n\nWarning: package 'scales' was built under R version 4.3.3\n\n\n\nAttaching package: 'scales'\n\nThe following object is masked from 'package:purrr':\n\n    discard\n\nThe following object is masked from 'package:readr':\n\n    col_factor\n\nddi &lt;- read_ipums_ddi(\"data/raw/cps_00001.xml\")\n\ncps &lt;- read_ipums_micro(\n  ddi,\n  data_file = \"data/raw/cps_00001.dat.gz\"\n)\n\nUse of data from IPUMS CPS is subject to conditions including that users should cite the data appropriately. Use command `ipums_conditions()` for more details.\n\nglimpse(cps)\n\nRows: 1,309,558\nColumns: 13\n$ YEAR     &lt;dbl&gt; 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2…\n$ SERIAL   &lt;dbl&gt; 5, 7, 7, 11, 11, 11, 12, 13, 15, 15, 15, 15, 17, 18, 21, 23, …\n$ MONTH    &lt;int+lbl&gt; 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, …\n$ HWTFINL  &lt;dbl&gt; 2006.405, 1693.809, 1693.809, 2030.227, 2030.227, 2030.227, 1…\n$ CPSID    &lt;dbl&gt; 2.01507e+13, 2.01404e+13, 2.01404e+13, 2.01405e+13, 2.01405e+…\n$ PERNUM   &lt;dbl&gt; 1, 1, 2, 1, 2, 3, 1, 1, 1, 2, 3, 4, 1, 1, 1, 1, 2, 1, 2, 1, 2…\n$ WTFINL   &lt;dbl&gt; 2006.405, 1693.809, 1608.035, 2056.075, 2030.227, 1735.411, 1…\n$ CPSIDP   &lt;dbl&gt; 2.01507e+13, 2.01404e+13, 2.01404e+13, 2.01405e+13, 2.01405e+…\n$ CPSIDV   &lt;dbl&gt; 2.01507e+14, 2.01404e+14, 2.01404e+14, 2.01405e+14, 2.01405e+…\n$ AGE      &lt;int+lbl&gt; 27, 65, 61, 49, 44, 3, 69, 62, 59, 68, 12, 15, 75, 66, 51…\n$ EMPSTAT  &lt;int+lbl&gt; 10, 36, 10, 10, 34, 0, 36, 32, 32, 32, 0, 34, 10, 36, 32,…\n$ LABFORCE &lt;int+lbl&gt; 2, 1, 2, 2, 1, 0, 1, 1, 1, 1, 0, 1, 2, 1, 1, 2, 2, 1, 0, …\n$ EDUC     &lt;int+lbl&gt; 111, 111, 123, 81, 111, 1, 81, 81, 60, 73, 1, 50, 111, 73…"
+  },
+  {
+    "objectID": "blog/posts/post3/index.html#unemployment-by-education",
+    "href": "blog/posts/post3/index.html#unemployment-by-education",
+    "title": "Education and Unemployment in the U.S.",
+    "section": "Unemployment by Education",
+    "text": "Unemployment by Education\nIn July 2026, unemployment was highest among adults with a high school education or less and lowest among those with graduate degrees. The pattern suggests a clear association between higher educational attainment and lower unemployment.\n\nunemp_2026 |&gt;\n  mutate(\n    education = factor(\n      education,\n      levels = c(\n        \"Graduate degree\",\n        \"Bachelor's degree\",\n        \"Some college / Associate\",\n        \"High school or less\"\n      )\n    )\n  ) |&gt;\n  ggplot(aes(x = education, y = unemployment_rate)) +\n  geom_col() +\n  geom_text(\n    aes(label = percent(unemployment_rate, accuracy = 0.1)),\n    hjust = -0.2\n  ) +\n  coord_flip() +\n  scale_y_continuous(\n    labels = percent_format(accuracy = 0.1),\n    expand = expansion(mult = c(0, 0.15))\n  ) +\n  labs(\n    title = \"Unemployment Rate by Education, 2026\",\n    x = NULL,\n    y = \"Unemployment rate\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nunemp_trend &lt;- cps_clean |&gt;\n  filter(LABFORCE == 2) |&gt;\n  mutate(\n    unemployed = EMPSTAT &gt;= 20 & EMPSTAT &lt; 30\n  ) |&gt;\n  group_by(YEAR, education) |&gt;\n  summarise(\n    unemployment_rate = weighted.mean(\n      unemployed,\n      w = WTFINL,\n      na.rm = TRUE\n    ),\n    .groups = \"drop\"\n  )\n\nunemp_trend\n\n# A tibble: 48 × 3\n    YEAR education                unemployment_rate\n   &lt;dbl&gt; &lt;chr&gt;                                &lt;dbl&gt;\n 1  2015 Bachelor's degree                   0.0289\n 2  2015 Graduate degree                     0.0278\n 3  2015 High school or less                 0.0635\n 4  2015 Some college / Associate            0.0454\n 5  2016 Bachelor's degree                   0.0264\n 6  2016 Graduate degree                     0.0263\n 7  2016 High school or less                 0.0540\n 8  2016 Some college / Associate            0.0442\n 9  2017 Bachelor's degree                   0.0274\n10  2017 Graduate degree                     0.0246\n# ℹ 38 more rows\n\n\n#Unemployment\n\nunemp_trend |&gt;\n  mutate(\n    education = factor(\n      education,\n      levels = c(\n        \"High school or less\",\n        \"Some college / Associate\",\n        \"Bachelor's degree\",\n        \"Graduate degree\"\n      )\n    )\n  ) |&gt;\n  ggplot(\n    aes(\n      x = YEAR,\n      y = unemployment_rate,\n      color = education\n    )\n  ) +\n  geom_line(linewidth = 1) +\n  geom_point(size = 2) +\n  scale_y_continuous(\n    labels = percent_format(accuracy = 0.1)\n  ) +\n  scale_x_continuous(\n    breaks = 2015:2026\n  ) +\n  labs(\n    title = \"Unemployment Rate by Education, 2015–2026\",\n    x = NULL,\n    y = \"Unemployment rate\",\n    color = \"Education\"\n  ) +\n  theme_minimal() +\n  theme(\n    axis.text.x = element_text(angle = 45, hjust = 1)\n  )"
+  },
+  {
+    "objectID": "blog/posts/post3/index.html#labor-force-participation",
+    "href": "blog/posts/post3/index.html#labor-force-participation",
+    "title": "Education and Labor Market Outcomes in the U.S.",
+    "section": "Labor Force Participation",
+    "text": "Labor Force Participation\nEducation is also associated with labor force participation. In 2026, participation increased steadily with educational attainment, ranging from about 71% among adults with a high school education or less to nearly 88% among those with graduate degrees.\n\n\n\n\n\n\n\n\n\nThe differences in labor force participation are also substantial. This suggests that education is related not only to employment outcomes among labor-force participants, but also to whether working-age adults participate in the labor market at all."
+  },
+  {
+    "objectID": "blog/posts/post3/index.html#conclusion",
+    "href": "blog/posts/post3/index.html#conclusion",
+    "title": "Education and Labor Market Outcomes in the U.S.",
+    "section": "Conclusion",
+    "text": "Conclusion\nThe CPS data show a consistent relationship between education and labor market outcomes. Adults with more education generally have lower unemployment and higher labor force participation. These are descriptive patterns and should not be interpreted as causal effects of education."
+  },
+  {
+    "objectID": "blog/posts/post3/index.html#changes-over-time",
+    "href": "blog/posts/post3/index.html#changes-over-time",
+    "title": "Education and Labor Market Outcomes in the U.S.",
+    "section": "Changes Over Time",
+    "text": "Changes Over Time\nLooking across years shows whether the education gap observed in 2026 is a persistent pattern or only a feature of one year.\n\n\n\n\n\n\n\n\n\nThe education gap also persists over time. All four groups experienced a sharp increase in unemployment in July 2020, during the COVID-19 labor market disruption. The rise was especially pronounced among adults with a high school education or less and those with some college education. Unemployment declined substantially afterward, but the lower-education groups generally continued to have higher rates."
   }
 ]

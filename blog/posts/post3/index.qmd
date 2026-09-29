@@ -1,0 +1,229 @@
+---
+title: "Education and Labor Market Outcomes in the U.S."
+author: "Xunyao Xu"
+date: "2026-09-29"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Introduction
+
+How do labor market outcomes differ across education groups in the United States? Education is closely connected to workers’ opportunities in the labor market, so differences in unemployment and labor force participation can help show which groups are more exposed to weak labor market conditions.  
+This post uses IPUMS CPS Basic Monthly Survey microdata to compare adults ages 25–64 across four education groups. I use July samples from 2015 to 2026 and calculate population statistics using the CPS final person weight, `WTFINL`.
+
+I restrict the sample to ages 25–64 to focus on working-age adults who have largely completed their education. I group educational attainment into four categories: high school or less, some college or an associate degree, a bachelor’s degree, and a graduate degree. The unemployment rate is calculated among people in the labor force, while the labor force participation rate measures the share of the working-age population that is either employed or actively looking for work.
+
+
+```{r}
+library(tidyverse)
+library(ipumsr)
+library(scales)
+
+ddi <- read_ipums_ddi("data/raw/cps_00001.xml")
+
+cps <- read_ipums_micro(
+  ddi,
+  data_file = "data/raw/cps_00001.dat.gz"
+)
+
+
+```
+
+
+```{r}
+cps_clean <- cps |>
+  filter(AGE >= 25, AGE <= 64) |>
+  mutate(
+    education = case_when(
+      EDUC <= 73 ~ "High school or less",
+      EDUC > 73 & EDUC < 111 ~ "Some college / Associate",
+      EDUC == 111 ~ "Bachelor's degree",
+      EDUC > 111 ~ "Graduate degree"
+    )
+  )
+
+```
+
+```{r}
+unemp_2026 <- cps_clean |>
+  filter(
+    YEAR == 2026,
+    LABFORCE == 2
+  ) |>
+  mutate(
+    unemployed = EMPSTAT >= 20 & EMPSTAT < 30
+  ) |>
+  group_by(education) |>
+  summarise(
+    unemployment_rate = weighted.mean(
+      unemployed,
+      w = WTFINL,
+      na.rm = TRUE
+    )
+  )
+
+
+```
+
+# Unemployment by Education
+
+The first figure compares unemployment rates across education groups in July 2026.
+
+```{r}
+unemp_2026 |>
+  mutate(
+    education = factor(
+      education,
+      levels = c(
+        "Graduate degree",
+        "Bachelor's degree",
+        "Some college / Associate",
+        "High school or less"
+      )
+    )
+  ) |>
+  ggplot(aes(x = education, y = unemployment_rate)) +
+  geom_col() +
+  geom_text(
+    aes(label = percent(unemployment_rate, accuracy = 0.1)),
+    hjust = -0.2
+  ) +
+  coord_flip() +
+  scale_y_continuous(
+    labels = percent_format(accuracy = 0.1),
+    expand = expansion(mult = c(0, 0.15))
+  ) +
+  labs(
+    title = "Unemployment Rate by Education, July 2026",
+    x = NULL,
+    y = "Unemployment rate"
+  ) +
+  theme_minimal()
+```
+In July 2026, unemployment was highest among adults with a high school education or less, at 4.4%, and lowest among those with graduate degrees, at 2.6%. The differences are not extremely large in absolute terms, but the ordering is clear: unemployment generally falls as educational attainment rises. This pattern is consistent with more educated workers having stronger attachment to employment, although the descriptive data alone cannot establish a causal effect of education.
+
+```{r}
+unemp_trend <- cps_clean |>
+  filter(LABFORCE == 2) |>
+  mutate(
+    unemployed = EMPSTAT >= 20 & EMPSTAT < 30
+  ) |>
+  group_by(YEAR, education) |>
+  summarise(
+    unemployment_rate = weighted.mean(
+      unemployed,
+      w = WTFINL,
+      na.rm = TRUE
+    ),
+    .groups = "drop"
+  )
+
+
+```
+
+## Changes Over Time
+
+Looking across years shows whether the education gap observed in 2026 is a persistent pattern or only a feature of one year.
+
+```{r}
+unemp_trend |>
+  mutate(
+    education = factor(
+      education,
+      levels = c(
+        "High school or less",
+        "Some college / Associate",
+        "Bachelor's degree",
+        "Graduate degree"
+      )
+    )
+  ) |>
+  ggplot(
+    aes(
+      x = YEAR,
+      y = unemployment_rate,
+      color = education
+    )
+  ) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_y_continuous(
+    labels = percent_format(accuracy = 0.1)
+  ) +
+  scale_x_continuous(
+    breaks = 2015:2026
+  ) +
+  labs(
+    title = "Unemployment Rate by Education, July 2015–2026",
+    x = NULL,
+    y = "Unemployment rate",
+    color = "Education"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+```
+The education gap also persists over time. All four groups experienced a sharp increase in unemployment in July 2020, during the COVID-19 labor market disruption. The rise was especially pronounced among adults with a high school education or less and those with some college education. Unemployment declined substantially afterward, but the lower-education groups generally continued to have higher rates.
+
+## Labor Force Participation
+
+Education is also associated with labor force participation. In 2026, participation increased steadily with educational attainment, ranging from about 71% among adults with a high school education or less to nearly 88% among those with graduate degrees.
+
+```{r}
+lfp_2026 <- cps_clean |>
+  filter(YEAR == 2026) |>
+  mutate(
+    in_labor_force = LABFORCE == 2
+  ) |>
+  group_by(education) |>
+  summarise(
+    labor_force_participation = weighted.mean(
+      in_labor_force,
+      w = WTFINL,
+      na.rm = TRUE
+    ),
+    .groups = "drop"
+  )
+
+
+
+
+lfp_2026 |>
+  mutate(
+    education = factor(
+      education,
+      levels = c(
+        "Graduate degree",
+        "Bachelor's degree",
+        "Some college / Associate",
+        "High school or less"
+      )
+    )
+  ) |>
+  ggplot(aes(x = education, y = labor_force_participation)) +
+  geom_col() +
+  geom_text(
+    aes(label = percent(labor_force_participation, accuracy = 0.1)),
+    hjust = -0.2
+  ) +
+  coord_flip() +
+  scale_y_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = c(0, 0.12))
+  ) +
+  labs(
+    title = "Labor Force Participation by Education, July 2026",
+    x = NULL,
+    y = "Labor force participation rate"
+  ) +
+  theme_minimal()
+```
+The differences in labor force participation are also substantial. This suggests that education is related not only to employment outcomes among labor-force participants, but also to whether working-age adults participate in the labor market at all.
+
+## Conclusion
+
+The CPS data show a consistent relationship between education and labor market outcomes. Adults with more education generally have lower unemployment and higher labor force participation. These are descriptive patterns and should not be interpreted as causal effects of education.
