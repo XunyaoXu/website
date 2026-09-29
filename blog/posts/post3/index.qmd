@@ -68,7 +68,7 @@ unemp_2026 <- cps_clean |>
 
 ```
 
-# Unemployment by Education
+## Unemployment by Education
 
 The first figure compares unemployment rates across education groups in July 2026.
 
