@@ -1,0 +1,287 @@
+---
+title: "Why Has the Monthly Cost of Buying a New Home Risen So Much?"
+author: "Xunyao Xu"
+date: "2026-10-05"
+format:
+  html:
+    toc: true
+    code-fold: true
+jupyter: python3
+---
+
+## Introduction
+
+Buying a home has become considerably more difficult for many U.S. households in recent years. New home prices increased rapidly during and after the COVID-19 pandemic, while mortgage rates later rose to levels not seen in more than a decade. Looking at either factor alone, however, does not fully capture the change in the cost of homeownership.
+
+For most buyers, the purchase price of a home is only part of the story. Because homes are typically financed with mortgages, the interest rate also determines how expensive a home is on a monthly basis. A higher home price increases the amount that must be borrowed, while a higher mortgage rate increases the cost of financing that loan.
+
+This post asks:
+
+> **How have changes in U.S. new-home prices and mortgage rates affected the monthly cost of buying a new home since 2015?**
+
+To answer this question, I examine changes in median home prices and 30-year fixed mortgage rates, and then combine them to estimate the monthly cost of purchasing a median-priced home.
+
+## Data
+
+I use two publicly available data series from the Federal Reserve Bank of St. Louis (FRED):
+
+- [Median Sales Price of New Houses Sold for the United States (MSPUS)](https://fred.stlouisfed.org/series/MSPUS)
+- [30-Year Fixed Rate Mortgage Average in the United States (MORTGAGE30US)](https://fred.stlouisfed.org/series/MORTGAGE30US)
+
+Both datasets are downloaded directly from FRED using URLs, making the analysis reproducible without manually downloading or updating data files.
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Median sales price of houses sold in the United States
+home = pd.read_csv(
+    "https://fred.stlouisfed.org/graph/fredgraph.csv?id=MSPUS"
+)
+
+# 30-year fixed mortgage rate
+mortgage = pd.read_csv(
+    "https://fred.stlouisfed.org/graph/fredgraph.csv?id=MORTGAGE30US"
+)
+
+# Rename the date column
+home = home.rename(columns={"observation_date": "DATE"})
+mortgage = mortgage.rename(columns={"observation_date": "DATE"})
+
+# Convert dates
+home["DATE"] = pd.to_datetime(home["DATE"])
+mortgage["DATE"] = pd.to_datetime(mortgage["DATE"])
+
+# Convert values to numeric
+home["MSPUS"] = pd.to_numeric(home["MSPUS"], errors="coerce")
+mortgage["MORTGAGE30US"] = pd.to_numeric(
+    mortgage["MORTGAGE30US"],
+    errors="coerce"
+)
+
+# Keep observations from 2015 onward
+home = home[home["DATE"] >= "2015-01-01"].copy()
+mortgage = mortgage[mortgage["DATE"] >= "2015-01-01"].copy()
+
+```
+
+
+## Home Prices Rose Sharply After 2020
+
+The first part of the cost story is the price of the home itself. @fig-home-price shows the median sales price of houses sold in the United States since 2015.
+
+```{python}
+#| label: fig-home-price
+#| fig-cap: "Median Sales Price of U.S. New Homes, 2015–2026"
+
+fig, ax = plt.subplots(figsize=(9, 5))
+
+ax.plot(
+    home["DATE"],
+    home["MSPUS"] / 1000,
+    linewidth=2
+)
+
+ax.set_xlabel("")
+ax.set_ylabel("Thousands of dollars")
+ax.grid(alpha=0.25)
+
+plt.tight_layout()
+plt.show()
+```
+From 2015 through 2019, median U.S. home prices increased gradually, rising from about $289,000 in early 2015 to a little above $320,000 before the pandemic. After a brief dip in 2020, prices began to rise much more quickly. By 2022, the median sales price had exceeded $440,000, which is more than 50 percent higher than its 2015 level.
+
+Although home prices declined somewhat after their peak, they remained around $410,000 in 2026, still far above pre-pandemic levels. This means that even before considering interest rates, a typical homebuyer in recent years has had to finance a substantially larger loan than a buyer in the mid-2010s.
+
+
+
+## Mortgage Rates Tell the Other Half of the Story
+
+Home prices are only one part of the cost of purchasing a home. Most households do not pay the full purchase price upfront, so the mortgage interest rate is also crucial. @fig-mortgage-rate shows how the average 30-year fixed mortgage rate changed over the same period.
+
+```{python}
+
+#| label: fig-mortgage-rate
+#| fig-cap: "30-Year Fixed Mortgage Rate in the U.S., 2015–2026"
+#| 
+fig, ax = plt.subplots(figsize=(9, 5))
+
+ax.plot(
+    mortgage["DATE"],
+    mortgage["MORTGAGE30US"],
+    linewidth=2
+)
+
+ax.set_xlabel("")
+ax.set_ylabel("Percent")
+ax.grid(alpha=0.25)
+
+plt.tight_layout()
+plt.show()
+```
+Mortgage rates followed a very different pattern from home prices. From 2015 through 2019, the average 30-year fixed mortgage rate generally fluctuated between about 3.5 and 5 percent. Rates then fell sharply during the pandemic, reaching below 3 percent in 2021.
+
+Beginning in 2022, however, mortgage rates increased rapidly. By late 2023, the average rate approached 8 percent, and although rates later declined somewhat, they remained well above their pre-pandemic levels.
+
+This matters because a higher mortgage rate increases the monthly payment required for the same loan amount. In other words, recent buyers have faced not only higher home prices, but also much more expensive financing.
+
+
+
+## Combining Home Prices and Mortgage Rates
+
+To measure the combined effect of higher home prices and borrowing costs, I estimate the monthly cost of purchasing the median-priced home.
+
+### Assumptions and Calculation
+
+I assume a **20 percent down payment** and a **30-year fixed-rate mortgage**. 
+Because the home-price data are quarterly while mortgage rates are weekly, I use the average mortgage rate within each quarter.
+
+For the broader monthly-cost estimate, I also use illustrative annual costs equal to **1 percent of the home value for property taxes** and **0.5 percent for homeowners insurance**. These assumptions are intended to provide a consistent national benchmark; actual taxes and insurance costs vary substantially across locations and households.
+
+For a loan amount \(L\), monthly interest rate \(r\), and \(n\) monthly payments, the mortgage payment is:
+
+$$
+M = L \frac{r(1+r)^n}{(1+r)^n - 1}
+$$
+```{python}
+# Convert weekly mortgage rates to quarterly averages
+
+mortgage_q = (
+    mortgage
+    .set_index("DATE")
+    .resample("QS")["MORTGAGE30US"]
+    .mean()
+    .reset_index()
+)
+
+# Merge home prices with quarterly mortgage rates
+housing = pd.merge(
+    home,
+    mortgage_q,
+    on="DATE",
+    how="inner"
+)
+
+# Mortgage assumptions
+down_payment_rate = 0.20
+property_tax_rate = 0.01
+insurance_rate = 0.005
+
+# Loan amount after 20% down payment
+housing["loan_amount"] = (
+    housing["MSPUS"] * (1 - down_payment_rate)
+)
+
+# Monthly interest rate
+housing["monthly_rate"] = (
+    housing["MORTGAGE30US"] / 100 / 12
+)
+
+# Number of monthly payments in a 30-year mortgage
+n = 30 * 12
+
+# Monthly mortgage principal + interest
+housing["monthly_payment"] = (
+    housing["loan_amount"]
+    * (
+        housing["monthly_rate"]
+        * (1 + housing["monthly_rate"]) ** n
+    )
+    / (
+        (1 + housing["monthly_rate"]) ** n - 1
+    )
+)
+
+# Monthly property tax
+housing["property_tax"] = (
+    housing["MSPUS"] * property_tax_rate / 12
+)
+
+# Monthly homeowners insurance
+housing["insurance"] = (
+    housing["MSPUS"] * insurance_rate / 12
+)
+
+# Total monthly cost excluding HOA
+housing["monthly_cost_no_hoa"] = (
+    housing["monthly_payment"]
+    + housing["property_tax"]
+    + housing["insurance"]
+)
+
+```
+
+
+## The Combined Monthly Cost of Buying a New Home
+
+To see how these changes translate into a household's monthly budget, I combine home prices and mortgage rates and estimate the monthly cost of purchasing the median-priced home.
+
+```{python}
+
+#| label: fig-monthly-cost
+#| fig-cap: "Estimated Monthly Cost of Buying a Median-Priced U.S. New Home"
+#| 
+fig, ax = plt.subplots(figsize=(9, 5))
+
+ax.plot(
+    housing["DATE"],
+    housing["monthly_payment"],
+    linewidth=2,
+    label="Mortgage principal + interest"
+)
+
+ax.plot(
+    housing["DATE"],
+    housing["monthly_cost_no_hoa"],
+    linewidth=2,
+    label="Including property tax + insurance"
+)
+
+
+ax.set_xlabel("")
+ax.set_ylabel("Monthly cost ($)")
+ax.legend()
+ax.grid(alpha=0.25)
+
+plt.tight_layout()
+plt.show()
+
+
+
+peak = housing.loc[
+    housing["monthly_cost_no_hoa"].idxmax()
+]
+
+```
+As shown in @fig-monthly-cost, the combined measure reveals a much sharper increase in monthly purchasing costs than home prices alone. Estimated monthly housing costs increased rapidly after 2021 as buyers faced both high home prices and sharply higher mortgage rates.
+
+Under the assumptions used here, the estimated monthly cost of purchasing the median-priced U.S. home peaked at about **$2,871 per month in the third quarter of 2023**. This includes mortgage principal and interest, estimated property taxes, and homeowners insurance.
+
+The gap between the two lines also shows that mortgage payments alone understate the monthly cost of homeownership. Property taxes and insurance add several hundred dollars per month, and these costs also rise as home values increase.
+
+```{python}
+start = housing.iloc[0]
+latest = housing.iloc[-1]
+
+increase_pct = (
+    latest["monthly_cost_no_hoa"]
+    / start["monthly_cost_no_hoa"]
+    - 1
+) * 100
+
+start_cost = f"${start['monthly_cost_no_hoa']:,.0f}"
+latest_cost = f"${latest['monthly_cost_no_hoa']:,.0f}"
+increase_text = f"{increase_pct:.0f} percent"
+peak_cost = f"${peak['monthly_cost_no_hoa']:,.0f}"
+```
+
+## Takeaway
+
+The three figures tell a consistent story. U.S. home prices rose substantially after 2020, while mortgage rates also increased sharply beginning in 2022. When these two forces are combined, the monthly cost of buying a home increased much more than either series alone would suggest.
+
+Under the assumptions used in this analysis, the estimated monthly cost of purchasing the median-priced new U.S. home increased from about **`{python} start_cost`** in 2015 to **`{python} latest_cost`** in the latest observation, an increase of approximately **`{python} increase_text`**. The estimated cost peaked at about **`{python} peak_cost`** per month in the third quarter of 2023.
+
+This shows that the increase in the monthly cost of buying a home cannot be explained by home prices alone. Higher borrowing costs have amplified the effect of already-elevated home prices, while property taxes and homeowners insurance add further costs beyond the mortgage payment itself.
+
+The broader lesson is that the financial burden of purchasing a home is better understood by considering the monthly costs faced by buyers rather than focusing only on the sale price.
