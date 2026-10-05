@@ -195,7 +195,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#assumptions-and-calculation" id="toc-assumptions-and-calculation" class="nav-link" data-scroll-target="#assumptions-and-calculation">Assumptions and Calculation</a></li>
   </ul></li>
-  <li><a href="#the-combined-monthly-cost-of-buying-a-home" id="toc-the-combined-monthly-cost-of-buying-a-home" class="nav-link" data-scroll-target="#the-combined-monthly-cost-of-buying-a-home">The Combined Monthly Cost of Buying a Home</a></li>
+  <li><a href="#the-combined-monthly-cost-of-buying-a-new-home" id="toc-the-combined-monthly-cost-of-buying-a-new-home" class="nav-link" data-scroll-target="#the-combined-monthly-cost-of-buying-a-new-home">The Combined Monthly Cost of Buying a New Home</a></li>
   <li><a href="#takeaway" id="toc-takeaway" class="nav-link" data-scroll-target="#takeaway">Takeaway</a></li>
   </ul>
 </nav>
@@ -252,7 +252,7 @@ window.Quarto = {
 <li><a href="https://fred.stlouisfed.org/series/MORTGAGE30US">30-Year Fixed Rate Mortgage Average in the United States (MORTGAGE30US)</a></li>
 </ul>
 <p>Both datasets are downloaded directly from FRED using URLs, making the analysis reproducible without manually downloading or updating data files.</p>
-<div id="9d56bcaf" class="cell" data-execution_count="1">
+<div id="41c505d2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -376,7 +376,7 @@ Figure&nbsp;2: 30-Year Fixed Mortgage Rate in the U.S., 2015–2026
 <p><span class="math display">\[
 M = L \frac{r(1+r)^n}{(1+r)^n - 1}
 \]</span></p>
-<div id="c074c39b" class="cell" data-execution_count="4">
+<div id="9f111994" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert weekly mortgage rates to quarterly averages</span></span>
@@ -447,8 +447,8 @@ M = L \frac{r(1+r)^n}{(1+r)^n - 1}
 </div>
 </section>
 </section>
-<section id="the-combined-monthly-cost-of-buying-a-home" class="level2">
-<h2 class="anchored" data-anchor-id="the-combined-monthly-cost-of-buying-a-home">The Combined Monthly Cost of Buying a Home</h2>
+<section id="the-combined-monthly-cost-of-buying-a-new-home" class="level2">
+<h2 class="anchored" data-anchor-id="the-combined-monthly-cost-of-buying-a-new-home">The Combined Monthly Cost of Buying a New Home</h2>
 <p>To see how these changes translate into a household’s monthly budget, I combine home prices and mortgage rates and estimate the monthly cost of purchasing the median-priced home.</p>
 <div id="cell-fig-monthly-cost" class="cell" data-execution_count="5">
 <details class="code-fold">
@@ -500,7 +500,7 @@ Figure&nbsp;3: Estimated Monthly Cost of Buying a Median-Priced U.S. New Home
 <p>As shown in <a href="#fig-monthly-cost" class="quarto-xref">Figure&nbsp;3</a>, the combined measure reveals a much sharper increase in monthly purchasing costs than home prices alone. Estimated monthly housing costs increased rapidly after 2021 as buyers faced both high home prices and sharply higher mortgage rates.</p>
 <p>Under the assumptions used here, the estimated monthly cost of purchasing the median-priced U.S. home peaked at about <strong>$2,871 per month in the third quarter of 2023</strong>. This includes mortgage principal and interest, estimated property taxes, and homeowners insurance.</p>
 <p>The gap between the two lines also shows that mortgage payments alone understate the monthly cost of homeownership. Property taxes and insurance add several hundred dollars per month, and these costs also rise as home values increase.</p>
-<div id="7cf910b6" class="cell" data-execution_count="6">
+<div id="eab5fec7" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> housing.iloc[<span class="dv">0</span>]</span>
@@ -522,7 +522,7 @@ Figure&nbsp;3: Estimated Monthly Cost of Buying a Median-Priced U.S. New Home
 <section id="takeaway" class="level2">
 <h2 class="anchored" data-anchor-id="takeaway">Takeaway</h2>
 <p>The three figures tell a consistent story. U.S. home prices rose substantially after 2020, while mortgage rates also increased sharply beginning in 2022. When these two forces are combined, the monthly cost of buying a home increased much more than either series alone would suggest.</p>
-<p>UUnder the assumptions used in this analysis, the estimated monthly cost of purchasing the median-priced new U.S. home increased from about <strong>$1,429</strong> in 2015 to <strong>$2,572</strong> in the latest observation, an increase of approximately <strong>80 percent</strong>. The estimated cost peaked at about <strong>$2,871</strong> per month in the third quarter of 2023.</p>
+<p>Under the assumptions used in this analysis, the estimated monthly cost of purchasing the median-priced new U.S. home increased from about <strong>$1,429</strong> in 2015 to <strong>$2,572</strong> in the latest observation, an increase of approximately <strong>80 percent</strong>. The estimated cost peaked at about <strong>$2,871</strong> per month in the third quarter of 2023.</p>
 <p>This shows that the increase in the monthly cost of buying a home cannot be explained by home prices alone. Higher borrowing costs have amplified the effect of already-elevated home prices, while property taxes and homeowners insurance add further costs beyond the mortgage payment itself.</p>
 <p>The broader lesson is that the financial burden of purchasing a home is better understood by considering the monthly costs faced by buyers rather than focusing only on the sale price.</p>
 
