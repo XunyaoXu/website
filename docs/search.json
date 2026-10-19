@@ -263,6 +263,55 @@
     "href": "blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "Why Has the Monthly Cost of Buying a New Home Risen So Much?\n\n\n\n\n\n\n\n\nOct 5, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nEducation and Labor Market Outcomes in the U.S.\n\n\n\n\n\n\n\n\nSep 29, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Technical Skills Do Economic Consulting Firms Actually Want?\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Is a P-Value, Really?\n\n\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\nNo matching items"
+    "text": "The Geography of Income in Philadelphia\n\n\nExploring Spatial Inequality Using Census Data\n\n\n\n\n\n\n\n\nOct 19, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhy Has the Monthly Cost of Buying a New Home Risen So Much?\n\n\n\n\n\n\n\n\n\n\n\nOct 5, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nEducation and Labor Market Outcomes in the U.S.\n\n\n\n\n\n\n\n\n\n\n\nSep 29, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Technical Skills Do Economic Consulting Firms Actually Want?\n\n\n\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Is a P-Value, Really?\n\n\n\n\n\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "blog/posts/post5/index.html",
+    "href": "blog/posts/post5/index.html",
+    "title": "The Geography of Income in Philadelphia",
+    "section": "",
+    "text": "Income inequality is not only about differences between individuals. It also has an important geographic dimension. Within the same city, households in different neighborhoods may experience very different economic conditions.\nIn this post, I explore the geographic distribution of median household income across Philadelphia using data from the U.S. Census Bureau’s American Community Survey (ACS). By mapping income at the census tract level, I examine where higher- and lower-income areas are concentrated and what these patterns suggest about spatial inequality."
+  },
+  {
+    "objectID": "blog/posts/post5/index.html#introduction",
+    "href": "blog/posts/post5/index.html#introduction",
+    "title": "The Geography of Income in Philadelphia",
+    "section": "",
+    "text": "Income inequality is not only about differences between individuals. It also has an important geographic dimension. Within the same city, households in different neighborhoods may experience very different economic conditions.\nIn this post, I explore the geographic distribution of median household income across Philadelphia using data from the U.S. Census Bureau’s American Community Survey (ACS). By mapping income at the census tract level, I examine where higher- and lower-income areas are concentrated and what these patterns suggest about spatial inequality."
+  },
+  {
+    "objectID": "blog/posts/post5/index.html#data-and-methods",
+    "href": "blog/posts/post5/index.html#data-and-methods",
+    "title": "The Geography of Income in Philadelphia",
+    "section": "Data and Methods",
+    "text": "Data and Methods\nThis analysis uses data from the U.S. Census Bureau’s 2024 American Community Survey (ACS) 5-Year Estimates, covering the period from 2020 to 2024. The data were obtained using the tidycensus package in R.\nThe main variable is median household income (B19013_001), measured in 2024 inflation-adjusted dollars. I focus on census tracts within Philadelphia County, Pennsylvania. Census tracts are relatively small geographic areas that allow us to examine income differences within the city.\nTo prepare the data, I removed census tracts with missing or invalid income estimates. I then combined the income information with geographic boundaries provided by the Census Bureau.\nFor visualization, I used the sf and ggplot2 packages to create a choropleth map. Each census tract is shaded according to its median household income, with lighter yellow representing lower incomes and darker red representing higher incomes.\nBecause ACS figures are survey estimates, they are subject to sampling uncertainty. Furthermore, census tract boundaries do not necessarily correspond to commonly recognized neighborhood boundaries."
+  },
+  {
+    "objectID": "blog/posts/post5/index.html#mapping-household-income",
+    "href": "blog/posts/post5/index.html#mapping-household-income",
+    "title": "The Geography of Income in Philadelphia",
+    "section": "Mapping Household Income",
+    "text": "Mapping Household Income\nThe map below illustrates the geographic distribution of median household income across Philadelphia’s census tracts.\n\n\n\n\n\n\nFigure 1: Median household income across Philadelphia census tracts. Source: U.S. Census Bureau, ACS 2024 5-Year Estimates.\n\n\n\nThe map reveals substantial geographic variation in household income across Philadelphia. Higher-income census tracts appear in several clusters, particularly in parts of northwestern Philadelphia. Meanwhile, many other areas have considerably lower median household incomes.\nThese differences suggest that income inequality in Philadelphia has a strong spatial dimension. Rather than being evenly distributed throughout the city, higher- and lower-income households appear to be concentrated in particular geographic areas.\nHowever, the map represents median household income at the census tract level, not the income of individual residents. It also does not establish why these geographic differences exist."
+  },
+  {
+    "objectID": "blog/posts/post5/index.html#discussion",
+    "href": "blog/posts/post5/index.html#discussion",
+    "title": "The Geography of Income in Philadelphia",
+    "section": "Discussion",
+    "text": "Discussion\nThe income data reveal substantial economic differences across Philadelphia’s 375 census tracts. The median of tract-level median household incomes is approximately $62,083, while the average is $68,707. The 25th percentile is $43,529, compared with $88,647 at the 75th percentile. This means that the median household income in a tract at the 75th percentile is approximately twice that of a tract at the 25th percentile.\nThe differences become even more pronounced when comparing the extremes. The lowest observed tract median household income is $17,875, while the highest is $227,656. Although these extreme values may not represent typical neighborhoods, they illustrate the wide variation in local economic conditions within Philadelphia.\nThe map adds an important geographic perspective to these statistics. Higher-income areas appear concentrated in certain parts of the city, including portions of northwestern Philadelphia, while lower-income tracts are distributed across many other areas. These patterns suggest that income differences are not randomly scattered across the city.\nSeveral factors could contribute to these geographic differences, including housing costs, historical development, access to employment opportunities, and residential sorting. However, this descriptive analysis cannot establish which factors cause the observed patterns.\nIt is also important to recognize that census tract median income does not represent every household within a tract. Furthermore, the statistics summarize tracts rather than individual households, and ACS estimates are subject to sampling uncertainty."
+  },
+  {
+    "objectID": "blog/posts/post5/index.html#conclusion",
+    "href": "blog/posts/post5/index.html#conclusion",
+    "title": "The Geography of Income in Philadelphia",
+    "section": "Conclusion",
+    "text": "Conclusion\nThis analysis highlights the geographic dimension of income inequality in Philadelphia. Using ACS data and GIS visualization, I find substantial differences in median household income across the city’s census tracts.\nThe comparison between the 25th and 75th percentiles suggests that income differences are not limited to a few extreme observations. The map further illustrates how these differences vary across geographic areas.\nThe main takeaway is that understanding urban economic inequality requires attention not only to income levels but also to where households live. Geographic visualization provides a useful starting point for identifying patterns that may motivate further research into housing affordability, neighborhood development, and economic opportunity."
+  },
+  {
+    "objectID": "blog/posts/post5/index.html#conclusion-1",
+    "href": "blog/posts/post5/index.html#conclusion-1",
+    "title": "The Geography of Income in Philadelphia",
+    "section": "Conclusion",
+    "text": "Conclusion"
   }
 ]
