@@ -263,7 +263,7 @@
     "href": "blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "The Geography of Income in Philadelphia\n\n\nExploring Spatial Inequality Using Census Data\n\n\n\n\n\n\n\n\nOct 19, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhy Has the Monthly Cost of Buying a New Home Risen So Much?\n\n\n\n\n\n\n\n\n\n\n\nOct 5, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nEducation and Labor Market Outcomes in the U.S.\n\n\n\n\n\n\n\n\n\n\n\nSep 29, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Technical Skills Do Economic Consulting Firms Actually Want?\n\n\n\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Is a P-Value, Really?\n\n\n\n\n\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\nNo matching items"
+    "text": "Matching Parents and Children with SQL in Python\n\n\n\n\n\n\n\n\n\n\n\nOct 23, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nThe Geography of Income in Philadelphia\n\n\nExploring Spatial Inequality Using Census Data\n\n\n\n\n\n\n\n\nOct 19, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhy Has the Monthly Cost of Buying a New Home Risen So Much?\n\n\n\n\n\n\n\n\n\n\n\nOct 5, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nEducation and Labor Market Outcomes in the U.S.\n\n\n\n\n\n\n\n\n\n\n\nSep 29, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Technical Skills Do Economic Consulting Firms Actually Want?\n\n\n\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nXunyao Xu\n\n\n\n\n\n\n\n\n\n\n\n\nWhat Is a P-Value, Really?\n\n\n\n\n\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/posts/post5/index.html",
@@ -313,5 +313,68 @@
     "title": "The Geography of Income in Philadelphia",
     "section": "Conclusion",
     "text": "Conclusion"
+  },
+  {
+    "objectID": "blog/posts/post6/index.html",
+    "href": "blog/posts/post6/index.html",
+    "title": "Matching Parents and Children with SQL in Python",
+    "section": "",
+    "text": "Tutorial data: This post uses simulated longitudinal family data, not PSID or observed U.S. income data. All conclusions concern the simulated example."
+  },
+  {
+    "objectID": "blog/posts/post6/index.html#introduction-why-study-intergenerational-mobility",
+    "href": "blog/posts/post6/index.html#introduction-why-study-intergenerational-mobility",
+    "title": "Matching Parents and Children with SQL in Python",
+    "section": "1. Introduction: Why study intergenerational mobility?",
+    "text": "1. Introduction: Why study intergenerational mobility?\nHow closely tied are the future earnings of a child to the earnings of its parents? Understanding intergenerational economic mobility depends on this topic.\nEconomists frequently assess this link using the intergenerational income elasticity (IGE). The larger the IGE, the stronger the relationship between parent and child income and thus the smaller the intergenerational mobility.\nIn this lesson, we’ll be matching parents and children in a simulated longitudinal dataset using Python and SQL. We will next estimate IGE using single year and multi-year average income. Finally, we will go over the implications of income measurement and life-cycle bias on our estimates.\nAt the end of this session you will know how to use SQL to join family information, build income measures, and analyse estimates of intergenerational income mobility."
+  },
+  {
+    "objectID": "blog/posts/post6/index.html#understanding-the-data",
+    "href": "blog/posts/post6/index.html#understanding-the-data",
+    "title": "Matching Parents and Children with SQL in Python",
+    "section": "2. Understanding the Data",
+    "text": "2. Understanding the Data\nBefore matching parents and children, we need to understand how the data are organized.\nFor this tutorial, we use a simulated longitudinal dataset containing 1,200 families, with one parent and one child in each family. Each individual has income observations from 2010 to 2019, giving us 2,400 individuals and 24,000 person-year records.\nThe dataset is organized into two tables:\n\nindividuals.csv: Contains individual identifiers (person_id), family identifiers (family_id), and each person’s role (parent or child).\nearnings.csv: Contains annual income observations for each individual, identified by person_id and year.\n\nThe person_id uniquely identifies each individual, while the family_id connects parents and children who belong to the same family. Since income observations are stored separately, we need SQL to combine the relevant information.\nFor example, we can use the following Python code to load the datasets:\nimport pandas as pd\n\nindividuals = pd.read_csv(\"data/individuals.csv\")\nearnings = pd.read_csv(\"data/earnings.csv\")\n\nprint(individuals.head())\nprint(earnings.head())\nThe first table describes who each person is and which family they belong to, while the second describes how their income changes over time.\nThis separation is common in longitudinal datasets and makes SQL particularly useful for combining information across individuals and years."
+  },
+  {
+    "objectID": "blog/posts/post6/index.html#matching-parents-and-children-using-sql",
+    "href": "blog/posts/post6/index.html#matching-parents-and-children-using-sql",
+    "title": "Matching Parents and Children with SQL in Python",
+    "section": "3. Matching Parents and Children Using SQL",
+    "text": "3. Matching Parents and Children Using SQL\nNow that we understand the data structure, we can use SQL to connect parents and children.\nPython provides a built-in library called sqlite3, which allows us to execute SQL queries directly within Python.\n\nStep 1: Create a SQLite Database\nFirst, we load our datasets into an in-memory SQLite database.\nimport sqlite3\n\nconn = sqlite3.connect(\":memory:\")\n\nindividuals.to_sql(\"individuals\", conn, index=False, if_exists=\"replace\")\nearnings.to_sql(\"earnings\", conn, index=False, if_exists=\"replace\")\nThe :memory: option creates a temporary database. The to_sql() function converts our pandas DataFrames into SQL tables.\n\n\nStep 2: Explore the Data with SELECT\nThe SELECT statement allows us to choose specific columns from a table.\nquery = \"\"\"\nSELECT person_id, family_id, role\nFROM individuals\nLIMIT 6;\n\"\"\"\n\nprint(pd.read_sql_query(query, conn))\nHere, SELECT specifies the columns we want, FROM identifies the table, and LIMIT restricts the output to six rows.\n\n\nStep 3: Match Parents and Children Using JOIN\nNext, we connect parents and children using their shared family_id.\nquery = \"\"\"\nSELECT\n    p.person_id AS parent_id,\n    c.person_id AS child_id,\n    p.family_id\nFROM individuals AS p\nJOIN individuals AS c\n    ON c.parent_id = p.person_id\n    AND c.family_id = p.family_id\nWHERE p.role = 'parent'\n  AND c.role = 'child';\n\"\"\"\n\nmatched = pd.read_sql_query(query, conn)\n\nprint(matched.head())\nprint(\"Matched parent-child pairs:\", len(matched))\nThis is a self-join, meaning that we join a table with itself.\nWe use p to represent parents and c to represent children. The JOIN operation connects each child’s parent_id to the corresponding parent’s person_id, while family_id verifies that both individuals belong to the same family. The WHERE clause ensures that each match contains one parent and one child.\nIn our simulated dataset, this produces 1,200 matched parent–child pairs.\n\n\nStep 4: Calculate Average Income Using GROUP BY\nAfter identifying family relationships, we can summarize annual income for each individual.\nquery = \"\"\"\nSELECT\n    person_id,\n    AVG(income) AS average_income,\n    COUNT(*) AS years_observed\nFROM earnings\nGROUP BY person_id;\n\"\"\"\n\naverage_income = pd.read_sql_query(query, conn)\n\nprint(average_income.head())\nThe GROUP BY statement combines observations belonging to the same person.\nThe aggregation functions AVG() and COUNT() calculate each person’s average annual income and number of observed years, respectively.\nThese SQL processes, in sum, allow us to convert distinct person and income data into information useful for the analysis of intergenerational mobility."
+  },
+  {
+    "objectID": "blog/posts/post6/index.html#constructing-income-measures",
+    "href": "blog/posts/post6/index.html#constructing-income-measures",
+    "title": "Matching Parents and Children with SQL in Python",
+    "section": "4. Constructing Income Measures",
+    "text": "4. Constructing Income Measures\nTo estimate the IGE, we need income measures for both parents and children. We compare income from 2010 with average income from 2010–2019.\nThe following SQL query combines our matched pairs with annual earnings and calculates both measures.\nquery = \"\"\"\nSELECT\n    m.parent_id,\n    m.child_id,\n    AVG(CASE WHEN p.year = 2010 THEN p.income END)\n        AS parent_single,\n    AVG(CASE WHEN c.year = 2010 THEN c.income END)\n        AS child_single,\n    AVG(CASE\n    WHEN p.year BETWEEN 2010 AND 2019\n    THEN p.income\nEND) AS parent_average,\n\nAVG(CASE\n    WHEN c.year BETWEEN 2010 AND 2019\n    THEN c.income\nEND) AS child_average\nFROM matched AS m\nJOIN earnings AS p\n    ON m.parent_id = p.person_id\nJOIN earnings AS c\n    ON m.child_id = c.person_id\n    AND p.year = c.year\nGROUP BY m.parent_id, m.child_id;\n\"\"\"\n\nmatched.to_sql(\"matched\", conn, index=False, if_exists=\"replace\")\n\nincome_data = pd.read_sql_query(query, conn)\nprint(income_data.head())\nCASE WHEN selects income from 2010, while AVG() calculates average income over the specified 2010–2019 period. Matching the years prevents duplicate combinations of annual observations.\nSingle-year income may contain temporary fluctuations, such as bonuses or unemployment. Averaging several years reduces the influence of these fluctuations and may better approximate long-run economic status."
+  },
+  {
+    "objectID": "blog/posts/post6/index.html#estimating-the-intergenerational-income-elasticity",
+    "href": "blog/posts/post6/index.html#estimating-the-intergenerational-income-elasticity",
+    "title": "Matching Parents and Children with SQL in Python",
+    "section": "5. Estimating the Intergenerational Income Elasticity",
+    "text": "5. Estimating the Intergenerational Income Elasticity\nWe estimate the IGE using a log-log regression:\n\\[\n\\ln(Y_{\\text{child}}) = \\alpha + \\beta \\ln(Y_{\\text{parent}}) + \\varepsilon\n\\]\nHere, \\(\\beta\\) measures the association between parental and child income. A higher IGE indicates stronger income persistence across generations.\nimport numpy as np\nimport statsmodels.api as sm\n\ndef estimate_ige(data, parent_col, child_col):\n    df = data[[parent_col, child_col]].dropna()\n    df = df[(df[parent_col] &gt; 0) & (df[child_col] &gt; 0)]\n\n    X = sm.add_constant(np.log(df[parent_col]))\n    y = np.log(df[child_col])\n\n    model = sm.OLS(y, X).fit()\n    return model.params.iloc[1]\n\nige_single = estimate_ige(\n    income_data, \"parent_single\", \"child_single\"\n)\n\nige_average = estimate_ige(\n    income_data, \"parent_average\", \"child_average\"\n)\n\nprint(f\"Single-year IGE: {ige_single:.5f}\")\nprint(f\"Ten-year average IGE: {ige_average:.5f}\")\nOur simulated results are:\n\n\n\nIncome measure\nEstimated IGE\n\n\n\n\nSingle-year income (2010)\n0.194\n\n\nTen-year average income (2010–2019)\n0.385\n\n\n\nThe larger estimate from the averaged income shows that transient income changes could attenuate the observed intergenerational association when just one year is studied. These conclusions are based on simulated data, not actual income mobility in the US."
+  },
+  {
+    "objectID": "blog/posts/post6/index.html#understanding-life-cycle-bias",
+    "href": "blog/posts/post6/index.html#understanding-life-cycle-bias",
+    "title": "Matching Parents and Children with SQL in Python",
+    "section": "6. Understanding Life-Cycle Bias",
+    "text": "6. Understanding Life-Cycle Bias\nLife-cycle bias arises when income at a certain age is not a good proxy for the long-run economic position of the individual.\nFor example, younger workers may have lower wages while they are in school or acquiring experience, whereas older workers may have more steady incomes.\nWe can see this by calculating the IGE at different ages of the children.\n\n\n\n\n\n\n\n\n\nThe calculated IGE of the 22-year-old is about 0.194 in magnitude, substantially below than the stimulated long-run value of 0.43. It normally increased with the age of children, reaching around 0.44 at age 31.\nThis trend suggests the possibility of life-cycle bias, i.e., income observed early in a worker’s career may be unrepresentative of long-run earning capabilities. Averaging income across several years smoothes out transitory changes, and the estimate for the IGE is 0.385, closer to the estimated long-run value. However, averaging does not automatically eliminate life-cycle bias."
+  },
+  {
+    "objectID": "blog/posts/post6/index.html#conclusion",
+    "href": "blog/posts/post6/index.html#conclusion",
+    "title": "Matching Parents and Children with SQL in Python",
+    "section": "7. Conclusion",
+    "text": "7. Conclusion\nIn this lesson we used Python and SQL to match 1,200 parent-child pairings and estimate inter-generational income elasticity.\nOur simulated results indicate that the IGE rises from 0.194 with single-year income to 0.385 with ten-year average income. This disparity underscores the significance of income assessment on intergenerational mobility results.\nThe essential lesson is the need of precise matching of people as well as exact measurement of income. SQL gives a consistent technique to build family bonds and multi-year income metrics assist to iron out short-term variations. Researchers should also be mindful of life-cycle impacts when assessing intergenerational income estimates."
+  },
+  {
+    "objectID": "blog/posts/post6/index.html#reproducing-this-tutorial",
+    "href": "blog/posts/post6/index.html#reproducing-this-tutorial",
+    "title": "Matching Parents and Children with SQL in Python",
+    "section": "8. Reproducing This Tutorial",
+    "text": "8. Reproducing This Tutorial\nAll data and results in this tutorial can be reproduced using the Python scripts in the accompanying GitHub repository.\nFirst, install the required Python packages:\npip install -r requirements.txt\nNext, generate the simulated longitudinal dataset:\npython scripts/generate_data.py\nFinally, run the SQL matching and IGE analysis:\npython scripts/analyze.py\nThe first script generates the individual and annual income records. The second matches parents and children using SQL, estimates the IGE, and saves the resulting tables and visualizations.\nBecause the data are simulated, the findings should be interpreted as a demonstration of the methodology rather than evidence about actual intergenerational mobility in the United States.\nSee the GitHub project README for commands to generate all data, results and figures from code."
   }
 ]
