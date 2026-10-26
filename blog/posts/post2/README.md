@@ -1,8 +1,8 @@
 # Blog Post 2: Web Scraping for Actionable Insights
 
-## What Technical Skills Do Economic Consulting Firms Actually Want?
+## What Technical Skills Appear in Entry-Level Economic Consulting Job Postings?
 
-This project uses web scraping in R to examine technical skills mentioned in entry-level economic consulting job postings from **The Brattle Group** and **Charles River Associates (CRA)**.
+This project uses web scraping in R to examine technical skills mentioned in a selected sample of entry-level economic consulting job postings from **The Brattle Group** and **Charles River Associates (CRA)**.
 
 The analysis focuses on eight technical skills:
 
@@ -16,6 +16,12 @@ The analysis focuses on eight technical skills:
 - GAMS
 
 The goal is to identify which skills appear consistently across entry-level job postings and which skills appear to be more firm-specific.
+
+## Scope and Limitations
+
+The published analysis is based on eight unique entry-level job types from two firms: six from Brattle and two from CRA. For Brattle, the raw scraped file contains all postings collected from the firm's Greenhouse board, and `codes/analysis.R` filters that file to selected analyst and internship roles before the analysis is performed. For CRA, two publicly available entry-level economics consulting postings were manually selected from the firm's Greenhouse board and then scraped.
+
+The results describe this saved sample and should not be interpreted as a general ranking of the most useful technical skills for all students or all economic consulting jobs.
 
 ## Repository Structure
 
@@ -70,6 +76,11 @@ install.packages(c(
 ### Step 1: Use the Saved Scraped Data
 
 The raw scraped job-posting data are already included in:
+
+- `brattle_job_details.csv` contains all Brattle postings collected by the scraping script; `codes/analysis.R` filters these to selected entry-level analyst and internship roles.
+- `cra_job_details.csv` contains the two manually selected CRA entry-level postings used in the analysis.
+
+The files are stored in:
 
 ```text
 data/raw/
