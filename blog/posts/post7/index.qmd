@@ -1,0 +1,113 @@
+---
+title: "Income and Longevity Across Countries"
+subtitle: "An Interactive Exploration with Plotly"
+author: "Xunyao Xu"
+date: 2026-10-26
+categories: [Plotly, Economics, Data Visualization]
+
+format:
+  html:
+    toc: true
+    code-fold: true
+
+execute:
+  warning: false
+  message: false
+---
+
+## Introduction
+Improvements in living standards and health are frequently linked to economic progress. Although the strength of this association varies greatly between nations and over time, countries with higher GDP per capita typically have longer life expectancies. This presents an intriguing question: **What can an interactive visualization show that a static figure cannot, and how has the relationship between income and life expectancy changed across countries and over time?**
+
+To explore this question, I use the `gapminder` dataset, which reports GDP per capita, life expectancy, population, and continent for countries around the world from 1952 to 2007. Because it allows readers to navigate between years, recognize specific nations, and analyze patterns across continents within a single visualization, Plotly is particularly helpful in this situation. This makes it feasible to observe both the general correlation between longevity and income as well as the various trajectories that nations have taken over time.
+
+## Data and Methods
+
+The analysis uses the `gapminder` dataset available through the `gapminder` R package. The dataset contains observations for 142 countries at five-year intervals from 1952 to 2007. For each country and year, it reports life expectancy, population, GDP per capita, and continent. These variables allow income and health outcomes to be compared across both countries and time.
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(plotly)
+library(gapminder)
+library(scales)
+
+plot_data <- gapminder %>%
+  mutate(
+    population_millions = pop / 1e6,
+    hover_text = paste0(
+      "<b>", country, "</b><br>",
+      "Year: ", year, "<br>",
+      "GDP per capita: ", dollar(gdpPercap, accuracy = 1), "<br>",
+      "Life expectancy: ", round(lifeExp, 1), " years<br>",
+      "Population: ", round(population_millions, 1), " million"
+    )
+  )
+
+
+```
+
+## Interactive Visualization
+
+The interactive graphic displays life expectancy on the vertical axis and GDP per capita on the horizontal. Each point symbolizes a nation; the color of the point indicates a continent, and the size of the point indicates population. The animation allows the reader to move across years, and when they mouse over a point, they can see specific details about each nation.
+
+```{r}
+#| label: interactive-plot
+#| warning: false
+#| message: false
+
+fig <- plotly::plot_ly(
+  data = plot_data,
+  x = ~gdpPercap,
+  y = ~lifeExp,
+  size = ~pop,
+  color = ~continent,
+  frame = ~year,
+  ids = ~country,
+  text = ~hover_text,
+  hoverinfo = "text",
+  type = "scatter",
+  mode = "markers",
+  sizes = c(8, 45),
+  marker = list(
+    opacity = 0.7
+  )
+) %>%
+  plotly::layout(
+    title = "GDP per Capita and Life Expectancy Across Countries",
+    xaxis = list(
+      title = "GDP per Capita",
+      type = "log"
+    ),
+    yaxis = list(
+      title = "Life Expectancy (Years)",
+      range = c(20, 85)
+    ),
+    legend = list(
+      title = list(text = "Continent")
+    )
+  )
+
+fig
+```
+
+
+Since the GDP per capita varies a lot from country to country, the horizontal axis is shown on a logarithmic scale. This avoids squashing lower income countries into a small portion of the graph, and makes comparisons throughout the entire income distribution easier. The image clearly indicates a positive correlation between income and life expectancy, but it is not a linear relationship. Changes in life expectancy are far more pronounced when shifting from very low to moderate income levels, than among established high-income countries.
+
+The animation adds an important time dimension to the analysis. As the slider moves from 1952 to 2007, most countries shift upward and to the right, indicating increases in both GDP per capital and life expectancy. However, these changes are uneven. Some countries experience rapid improvements in both measures, while others show slower progress or temporary setbacks. The interactive format makes these different country paths easier to identify than a single static graph would.
+
+The hover function allows readers to examine individual countries without cluttering the figure with labels. Hover over a point to see the nation, year, GDP per capita, life expectancy and population. There are also noticeable regional disparities. European countries tend to be grouped in the upper-right of the chart. Many African countries are still at low levels of income/life-expectancy , particularly in earlier years. But at the same time, countries in the same continent do not follow the same pathways, revealing a significant heterogeneity in economic and health results.
+
+## Discussion
+The visualization suggests that income and life expectancy are strongly related, but it does not establish that higher GDP per capita directly causes people to live longer. Income is also associated with many other factors, including access to health care, nutrition, sanitation, education, and public infrastructure. The figure therefore shows a broad cross-country relationship rather than a simple causal effect of income on health.
+
+The shape of the connection also indicates diminishing returns to income. Differences across rich countries are substantially smaller . The transition between very low income levels and middle income levels is associated with large gains in life expectancy .The flattening of the relationship at higher income levels is consistent with diminishing returns, although this visualization alone cannot explain why the relationship takes this shape. The interactive graph makes it simpler to see this nonlinear relationship, as countries may be compared across income levels and time.
+
+This analysis also has important limitations. The Gapminder data are summarized for countries by national averages so they do not reflect variation in income or health within each country. In addition, the dataset stops in 2007 and cannot be used to describe trends more recently. However, these restrictions aside, the interactive approach offers an added benefit in allowing users to explore individual countries, make comparisons between regions and observe developments over time without the need for multiple distinct static figures.
+
+## Conclusion
+
+GDP per capita and life expectancy have tended to move together across countries, but the relationship is far from smooth. At higher income levels among rich countries, increased income is associated with lesser increases, while the greatest disparities in lifespan exist at lower income levels. The Plotly visualization adds a significant depth to this comparison, as it allows the viewer to track nations across time and scrutinize individual observations directly. Overall the interactive technique illustrates not just that income and longevity are related but also how differently that relationship has evolved among countries and regions.
+
