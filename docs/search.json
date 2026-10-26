@@ -172,14 +172,14 @@
     "href": "blog/posts/post1/index.html",
     "title": "What Is a P-Value, Really?",
     "section": "",
-    "text": "Suppose a researcher runs an experiment and reports a p-value of 0.03. What does that number actually mean?\nA common interpretation is that there is only a 3% chance that the null hypothesis is true. This sounds reasonable, but it is incorrect.\nThe p-value is one of the most widely used ideas in statistics, but also one of the most frequently misunderstood. The main reason is that it answers a slightly different question from the one people naturally want to ask."
+    "text": "Suppose a researcher runs an experiment and reports a p-value of 0.03. What does that number actually mean?\nA common interpretation is that there is only a 3% chance that the null hypothesis is true. This sounds reasonable, but it is incorrect.\nThis is not just a classroom mistake. In 2016, the American Statistical Association issued a formal statement on p-values because they were being widely misused and misinterpreted in scientific research. One of the central problems is exactly the confusion above: a p-value does not tell us the probability that a hypothesis is true.\nThat makes the concept worth understanding beyond a statistics textbook. P-values appear throughout empirical research in economics, medicine, psychology, and many other fields, so misunderstanding them can lead readers to overstate what a study has actually shown. The source of the confusion is subtle: the p-value answers a different probability question from the one people often want to ask."
   },
   {
     "objectID": "blog/posts/post1/index.html#why-is-a-p-value-so-confusing",
     "href": "blog/posts/post1/index.html#why-is-a-p-value-so-confusing",
     "title": "What Is a P-Value, Really?",
     "section": "",
-    "text": "Suppose a researcher runs an experiment and reports a p-value of 0.03. What does that number actually mean?\nA common interpretation is that there is only a 3% chance that the null hypothesis is true. This sounds reasonable, but it is incorrect.\nThe p-value is one of the most widely used ideas in statistics, but also one of the most frequently misunderstood. The main reason is that it answers a slightly different question from the one people naturally want to ask."
+    "text": "Suppose a researcher runs an experiment and reports a p-value of 0.03. What does that number actually mean?\nA common interpretation is that there is only a 3% chance that the null hypothesis is true. This sounds reasonable, but it is incorrect.\nThis is not just a classroom mistake. In 2016, the American Statistical Association issued a formal statement on p-values because they were being widely misused and misinterpreted in scientific research. One of the central problems is exactly the confusion above: a p-value does not tell us the probability that a hypothesis is true.\nThat makes the concept worth understanding beyond a statistics textbook. P-values appear throughout empirical research in economics, medicine, psychology, and many other fields, so misunderstanding them can lead readers to overstate what a study has actually shown. The source of the confusion is subtle: the p-value answers a different probability question from the one people often want to ask."
   },
   {
     "objectID": "blog/posts/post1/index.html#a-simple-coin-example",
@@ -418,5 +418,12 @@
     "title": "Income and Longevity Across Countries",
     "section": "Conclusion",
     "text": "Conclusion\nGDP per capita and life expectancy have tended to move together across countries, but the relationship is far from smooth. At higher income levels among rich countries, increased income is associated with lesser increases, while the greatest disparities in lifespan exist at lower income levels. The Plotly visualization adds a significant depth to this comparison, as it allows the viewer to track nations across time and scrutinize individual observations directly. Overall the interactive technique illustrates not just that income and longevity are related but also how differently that relationship has evolved among countries and regions."
+  },
+  {
+    "objectID": "blog/posts/post1/index.html#reference",
+    "href": "blog/posts/post1/index.html#reference",
+    "title": "What Is a P-Value, Really?",
+    "section": "Reference",
+    "text": "Reference\nWasserstein, R. L., & Lazar, N. A. (2016). The ASA Statement on p-Values: Context, Process, and Purpose. The American Statistician, 70(2), 129–133."
   }
 ]

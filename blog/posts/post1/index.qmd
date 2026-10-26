@@ -12,7 +12,9 @@ Suppose a researcher runs an experiment and reports a p-value of 0.03. What does
 
 A common interpretation is that there is only a 3% chance that the null hypothesis is true. This sounds reasonable, but it is incorrect.
 
-The p-value is one of the most widely used ideas in statistics, but also one of the most frequently misunderstood. The main reason is that it answers a slightly different question from the one people naturally want to ask.
+This is not just a classroom mistake. In 2016, the [American Statistical Association](https://doi.org/10.1080/00031305.2016.1154108) issued a formal statement on p-values because they were being widely misused and misinterpreted in scientific research. One of the central problems is exactly the confusion above: a p-value does not tell us the probability that a hypothesis is true.
+
+That makes the concept worth understanding beyond a statistics textbook. P-values appear throughout empirical research in economics, medicine, psychology, and many other fields, so misunderstanding them can lead readers to overstate what a study has actually shown. The source of the confusion is subtle: the p-value answers a different probability question from the one people often want to ask.
 
 ## A Simple Coin Example
 
@@ -117,3 +119,7 @@ The easiest way to remember it is:
 > Assume the null hypothesis is true. How surprising is the data?
 
 Once this direction of probability is clear, p-values become much less mysterious.
+
+## Reference
+
+Wasserstein, R. L., & Lazar, N. A. (2016). [The ASA Statement on p-Values: Context, Process, and Purpose](https://doi.org/10.1080/00031305.2016.1154108). *The American Statistician, 70*(2), 129–133.
