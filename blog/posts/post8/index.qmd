@@ -1,0 +1,157 @@
+---
+title: "Why Does a 95% Confidence Interval Work? A Simulation-Based Explanation"
+author: "Xunyao Xu"
+date: "2026-11-02"
+format:
+  html:
+    toc: true
+    code-fold: true
+    fig-width: 8
+    fig-height: 4.7
+execute:
+  echo: true
+  warning: false
+  message: false
+jupyter: python3
+---
+
+## Introduction
+
+When a researcher reports a 95% confidence interval, what does 95% mean? It does **not** indicate that there is a 95% chance that a fixed, already-computed interval contains the unknown population mean. Instead, the procedure is designed so that if we were to repeat the study many times, around 95% of the resulting intervals would contain the true population mean. Simulation helps illustrate this distinction. Here, I build bootstrap confidence intervals, evaluate their coverage over repeated samples, and then use a simulated null distribution to explain p-values and hypothesis testing.
+
+We simulate observations from a standard normal population with a true mean of 0 and a standard deviation of 1. Each sample contains 100 observations. We use 3,500 bootstrap resamples to construct each confidence interval and repeat the experiment 1,000 times to evaluate the coverage probability.
+
+All observations below are **synthetic**. I generate them from a normal population with a known mean and standard deviation so we can directly evaluate how often the confidence intervals capture the true parameter. This is a teaching exercise, not an empirical estimate based on real-world data.
+
+
+```{python}
+#| label: setup
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+SEED = 64008
+rng = np.random.default_rng(SEED)
+TRUE_MEAN = 0.0
+POP_SD = 1.0
+N = 100
+B = 3500  # bootstrap resamples for each interval
+R = 1000   # independent simulated studies
+ALPHA = 0.05
+```
+
+## 1. Building a bootstrap confidence interval
+
+Suppose we only have one random sample of size 100. Since we do not know the population mean, we approximate it with the sample mean. The **bootstrap** uses the observed sample as a proxy for the population: sample 100 values *with replacement*, compute the mean, repeat 3500 times. The distribution you obtain tells you how the sample mean might change given what you know about this sample.
+
+```{python}
+#| label: bootstrap
+sample = rng.normal(TRUE_MEAN, POP_SD, size=N)
+observed_mean = sample.mean()
+bootstrap_means = rng.choice(sample, size=(B, N), replace=True).mean(axis=1)
+ci_low, ci_high = np.quantile(bootstrap_means, [ALPHA / 2, 1 - ALPHA / 2])
+
+fig, ax = plt.subplots()
+ax.hist(bootstrap_means, bins=35, edgecolor="white", alpha=0.8)
+ax.axvline(observed_mean, color="black", lw=2, label="Sample mean")
+ax.axvline(ci_low, color="crimson", ls="--", lw=2, label="95% percentile CI")
+ax.axvline(ci_high, color="crimson", ls="--", lw=2)
+ax.axvline(TRUE_MEAN, color="royalblue", ls=":", lw=2, label="True mean (known in simulation)")
+ax.set(xlabel="Bootstrap sample mean", ylabel="Frequency", title="Bootstrap distribution of the sample mean")
+ax.legend()
+plt.show()
+print(f"Sample mean: {observed_mean:.3f}; bootstrap 95% CI: [{ci_low:.3f}, {ci_high:.3f}]")
+```
+
+The two red lines mark the 2.5th and 97.5th percentiles of the bootstrap estimates. This is a **percentile bootstrap interval**, one of several ways to construct a bootstrap confidence interval. A single interval can either cover the population mean or miss it; the 95% interpretation refers to the procedure's long-run performance.
+
+In this simulation, the bootstrap 95% confidence interval is approximately [-0.372, 0.008], which contains the true population mean of 0.
+
+## 2. Does a 95% interval cover the truth 95% of the time?
+
+Now repeat the *entire experiment* 1000 times: draw a fresh original sample, compute a new bootstrap distribution, and make a new 95% interval. Since we set the true population mean to zero, each interval can be classified as a success or failure. This repeated-study step—not just resampling one fixed sample—is essential for measuring coverage.
+
+```{python}
+#| label: coverage
+intervals = np.empty((R, 2))
+for i in range(R):
+    original = rng.normal(TRUE_MEAN, POP_SD, size=N)
+    estimates = rng.choice(original, size=(B, N), replace=True).mean(axis=1)
+    intervals[i] = np.quantile(estimates, [ALPHA / 2, 1 - ALPHA / 2])
+
+covered = (intervals[:, 0] <= TRUE_MEAN) & (TRUE_MEAN <= intervals[:, 1])
+coverage_rate = covered.mean()
+print(f"Empirical coverage: {coverage_rate:.1%} ({covered.sum()} out of {R} intervals)")
+
+fig, ax = plt.subplots()
+shown = 65
+for j in range(shown):
+    color = "steelblue" if covered[j] else "crimson"
+    ax.plot(intervals[j], [j, j], color=color, lw=1.7)
+ax.axvline(TRUE_MEAN, color="black", ls="--", lw=2, label="True population mean")
+ax.set(xlabel="Parameter value", ylabel="Simulated study", title=f"First {shown} of {R} bootstrap intervals (coverage: {coverage_rate:.1%})")
+ax.legend()
+plt.show()
+```
+In our simulation, 947 out of 1,000 confidence intervals contain the true population mean of 0, resulting in an empirical coverage rate of 94.7%. This is close to the nominal 95% confidence level, illustrating how confidence intervals achieve their intended coverage over repeated sampling. The small difference from 95% reflects simulation variability and possible finite-sample effects.
+
+The empirical coverage rate should be *approximately* (not exactly) 95%: finite Monte Carlo simulations fluctuate. The percentile bootstrap does not ensure precise nominal coverage for all populations and sample sizes. This example using a normal population helps demonstrate why confidence intervals are evaluated based on how often they cover a specific parameter over repeated samples.
+
+## 3. Hypothesis testing and the null distribution
+
+Suppose we test **H₀: μ = 0** against **H₁: μ ≠ 0**, assuming the population standard deviation is known to be one. For a sample of size 100, the z-statistic is $Z=(\bar X - 0)/(1/\sqrt{100})$. When the null is true and the data are normal, it follows a standard normal distribution. We can verify this by simulating 10,000 null samples and calculating a z-statistic for each.
+
+```{python}
+#| label: hypothesis-test
+H0_MEAN = 0.0
+M = 10000
+null_means = rng.normal(H0_MEAN, POP_SD, size=(M, N)).mean(axis=1)
+null_z = (null_means - H0_MEAN) / (POP_SD / np.sqrt(N))
+critical = norm.ppf(1 - ALPHA / 2)
+
+# An illustrative observed dataset with a small positive shift
+observed_data = rng.normal(0.33, POP_SD, size=N)
+z_observed = (observed_data.mean() - H0_MEAN) / (POP_SD / np.sqrt(N))
+p_value = np.mean(np.abs(null_z) >= abs(z_observed))  # simulation-based p-value
+
+fig, ax = plt.subplots()
+ax.hist(null_z, bins=60, density=True, edgecolor="white", alpha=0.65, label="Simulated null statistics")
+xgrid = np.linspace(-4.5, 4.5, 500)
+ygrid = norm.pdf(xgrid)
+ax.plot(xgrid, ygrid, color="black", lw=1.7, label="Standard normal density")
+ax.fill_between(xgrid, ygrid, where=(xgrid <= -critical) | (xgrid >= critical), color="crimson", alpha=0.25, label="5% rejection regions")
+ax.fill_between(
+    xgrid, ygrid,
+    where=(np.abs(xgrid) >= abs(z_observed)),
+    color="orange",
+    alpha=0.55,
+    label="Two-sided p-value regions"
+)
+ax.axvline(-critical, color="crimson", ls="--")
+ax.axvline(critical, color="crimson", ls="--")
+ax.axvline(z_observed, color="darkgreen", lw=2, label="Observed z-statistic")
+ax.axvline(
+    -abs(z_observed),
+    color="darkorange",
+    ls=":",
+    lw=1.5
+)
+ax.set(xlabel="z-statistic under H₀", ylabel="Density", title="Null distribution and two-sided rejection regions")
+ax.legend(loc="upper left", fontsize=8)
+plt.show()
+print(f"Observed z: {z_observed:.3f}; simulated two-sided p-value: {p_value:.4f}; critical values: ±{critical:.3f}")
+print("Decision at 5%:", "Reject H0" if p_value < ALPHA else "Do not reject H0")
+```
+The red shaded regions represent the **rejection regions** at the 5% significance level. We reject the null hypothesis if the z-statistic is less than −1.96 or greater than +1.96. The orange shaded regions illustrate the tail areas corresponding to the **two-sided p-value**, which is the probability of observing a test statistic at least as extreme as ours in either direction, assuming the null hypothesis is true.
+
+In our simulation, the observed z-statistic is approximately 3.647, with a simulated p-value of 0.0001. Since the p-value is below 0.05, we reject the null hypothesis. However, the p-value does **not** represent the probability that the null hypothesis is true. Although the observed sample was generated with a positive mean shift, the reference distribution and p-value were calculated under the null hypothesis.
+
+## Conclusion
+
+Bootstrap resampling approximates the uncertainty of an estimate using a sample. Repeating the **whole sampling-and-interval operation** shows what 95% coverage means. Over the long run, nearly 95% of intervals produced by a well-calibrated procedure will contain the fixed population parameter. The principle of repeated sampling is also used in hypothesis testing, but it starts with a null hypothesis and asks how extreme a statistic would be if the null hypothesis were true. It is easier to see why these methods make sense when we plot their sample distributions, rather than treating confidence levels and p-values as mysterious probabilities.
+
+In our experiment, the empirical coverage rate was 94.7%, close to the nominal 95% confidence level. The hypothesis test also demonstrated how an extreme observed z-statistic can lead to a small p-value and rejection of the null hypothesis.
+
+## Reproducibility
+
+The complete Python code is embedded in this Quarto document. The data are synthetic and generated with a fixed random seed, so no external dataset is required. Run `quarto render index.qmd` in an environment with the dependencies listed in `requirements.txt`.
