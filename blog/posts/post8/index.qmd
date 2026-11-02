@@ -139,7 +139,9 @@ ax.axvline(
 ax.set(xlabel="z-statistic under H₀", ylabel="Density", title="Null distribution and two-sided rejection regions")
 ax.legend(loc="upper left", fontsize=8)
 plt.show()
-print(f"Observed z: {z_observed:.3f}; simulated two-sided p-value: {p_value:.4f}; critical values: ±{critical:.3f}")
+print(f"Observed z-statistic: {z_observed:.3f}")
+print(f"Simulated two-sided p-value: {p_value:.4f}")
+print(f"Critical values: ±{critical:.3f}")
 print("Decision at 5%:", "Reject H0" if p_value < ALPHA else "Do not reject H0")
 ```
 The red shaded regions represent the **rejection regions** at the 5% significance level. We reject the null hypothesis if the z-statistic is less than −1.96 or greater than +1.96. The orange shaded regions illustrate the tail areas corresponding to the **two-sided p-value**, which is the probability of observing a test statistic at least as extreme as ours in either direction, assuming the null hypothesis is true.
